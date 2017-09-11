@@ -18,3 +18,19 @@ newObj : 表单之外的额外参数，JSON数据
 
 #### 验证两个日期的有效性，即 A日期是否小于等于B日期，便于验证和传输有效数据
 >$('#beginDate,#endDate').checkDate();//通过ID验证
+
+#### 设置当前元素列表中元素的事件或 每个元素与其所在列表的下一个元素之间的关系
+
+>$('input').nextElement(function(t,list,index){// t 元素，list  jq选择器选取的元素列表,index 元素的索引
+$(t).on('keyup',function(event){
+
+if(event.keyCode==13)
+{
+$(list[index+1]).focus();
+
+}
+
+})
+
+
+})
