@@ -18,12 +18,18 @@ $.fn.extend({
 		});
 		return $.extend(true, obj, newObj);
 	},
+	/**
+	 * 通过ID设置 日期控件 为当天
+	 */
 	setCurDateById: function() {
 		$.each($(this), function(i) {
 			document.getElementById($(this).attr('id')).valueAsDate = new Date();
 		});
 
 	},
+	/**
+	 * 验证起始日期和终止日期的有效性
+	 */
 	checkDate: function() {
 		var check_ok = true;
 		var DateObj = new Array();
@@ -36,10 +42,32 @@ $.fn.extend({
 		}
 
 		return check_ok;
+	},
+	
+	/**
+	 * 指定当前选中元素所具有的动作，并设置当前元素与下一个元素的关系
+	 * @param {Object} Func  匿名函数，用于设置当前元素的动作和下一个元素的动作联系，$(this)为当前元素，list为选中的元素列表，
+	 * 所以要控制元素列表中当前元素的下一个元素，只需要$(list[i+1]).focus()即可
+	 */
+	nextElement:function(Func)
+	{
+		var list=[];
+		$(this).each(function(i){			
+			list.push(this);
+			Func(this,list,i);
+			
+		});
+		//callback;
 	}
 
 });
-
+//自定义命名空间 rap
 $.extend({
+rap:{
+	
 
+	
+}
 });
+
+

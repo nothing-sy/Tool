@@ -7,16 +7,31 @@
 	</head>
 
 	<body>
-		<input type="date" name="begin" id="begin" value="" />
-		<input type="date" name="end" id="end" value="" />
+		<div id="">
+			a<input type="text" name="a" id="a" value="" /> b
+			<input type="text" name="b" id="b" value="" />
+
+		</div>
+		<div id="dd">
+			c<input type="text" name="c" id="c" value="" /> d
+			<input type="text" name="d" id="d" value="" />
+
+		</div>
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js">
 		</script>
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-	
-	$('#begin,#end').setCurDateById();
-	console.log($('#begin,#end').checkDate());
-</script>
+		<script type="text/javascript">
+			$('input').nextElement(function(t) {
+				$(t).on('keyup', function(event) {
+					if(event.keyCode == 13) {
+						//$(list[index + 1]).focus();
+						console.log($(this).attr('id'));
+					}
+
+				})
+
+			});
+		</script>
 	</body>
 
 </html>
