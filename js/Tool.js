@@ -23,21 +23,23 @@ $.fn.extend({
 			document.getElementById($(this).attr('id')).valueAsDate = new Date();
 		});
 
-	}
-
-});
-
-$.extend({
-	checkDate: function(from, to) {
+	},
+	checkDate: function() {
 		var check_ok = true;
-		var oDate1 = new Date(from);
-		var oDate2 = new Date(to);
-		if(oDate1.getTime() > oDate2.getTime()) {
+		var DateObj = new Array();
+		$.each($(this), function(i) {
+			DateObj.push(new Date($(this).val()));
+		});
+		if(DateObj[0].getTime() > DateObj[1].getTime()) {
 
 			check_ok = false;
 		}
 
 		return check_ok;
 	}
+
+});
+
+$.extend({
 
 });
