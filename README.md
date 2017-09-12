@@ -10,8 +10,8 @@
 
 #### 表单序列化方法
 ```
-$('form').formTojson(join,newObj);//返回 JSON对象<br/>
-join: 遇到参数名一致的时候是否合并，如bootstrap提供的select 多选的情况或者，newObj与表单参数名一致的情况 【true/false】，合并之后，参数值用逗号隔开。 false:表单以最后一个同名参数或newObj的参数值为准 <br/>
+$('form').formTojson(newObj,join);//返回 新的JSON对象<br/>
+join: 遇到参数名一致的时候是否合并,如果合并则以逗号隔开，比如{a:'1,2'}而并非{a:'1',a:'2'}的形式存在，如果false或者不填，则根据顺序替换相同属性，替换顺序为：newObj的属性>在表单中排序靠后的>在表单中排序靠前的
 newObj : 表单之外的额外参数，JSON数据
 ```
 #### 通过ID设置input type='date'的控件，默认设置为当天时间
@@ -30,4 +30,11 @@ $(list[index+1]).focus();
 }
 })
 })
+```
+
+#### 新增正则表达式验证数字（小数点）
+```
+$('#a,.b').Regnumber(num);//num非必填。验证所选元素值是否为数字，默认为两位小数点，num设置小数点后几位，小于0默认两位小数
+
+
 ```
