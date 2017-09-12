@@ -8,7 +8,7 @@
 <script type="text/javascript" src="js/Tool.js"></script>
 ```
 
-#### 表单序列化方法
+#### 表单序列化并转换为JSON数据
 ```
 $('form').formTojson(newObj,join);//返回 新的JSON对象<br/>
 join: 遇到参数名一致的时候是否合并,如果合并则以逗号隔开，比如{a:'1,2'}而并非{a:'1',a:'2'}的形式存在，如果false或者不填，则根据顺序替换相同属性，替换顺序为：newObj的属性>在表单中排序靠后的>在表单中排序靠前的
