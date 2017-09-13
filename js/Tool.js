@@ -91,11 +91,43 @@ $.fn.extend({
 		return res;
 
 	}
+	
 
 });
 //自定义命名空间 rap
 $.extend({
-	rap: {
+	tools: {
+		jsonp:function(url, callbackFunc, data) //跨域请求
+{
 
+	var data = arguments[2] ? arguments[2] : ''; //默认参数为空
+	//var type = arguments[3] ? arguments[3] : 'get'; //默认类型为GET
+
+	if(url != '' && callbackFunc != '') {
+		$.ajax({
+			type: 'get',
+			dataType: 'jsonp',
+			url: url,
+			jsonp: "callback",
+			jsonpCallback: callbackFunc,
+			data: data,
+			async:true,
+			success: function(data) {
+				console.log('跨域请求成功');
+				//mui.alert('跨域请求成功');
+
+			},
+			error: function() {
+
+				console.log('跨域请求失败');
+				//mui.alert('跨域请求失败')
+
+			}
+		});
+
+	} else
+		alert('URL，回调函数不能为空');
+
+}
 	}
 });

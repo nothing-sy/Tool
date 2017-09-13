@@ -38,3 +38,17 @@ $('#a,.b').Regnumber(num);//num非必填。验证所选元素值是否为数字�
 
 
 ```
+#### Jsonp跨域(GET方式)
+
+```
+$.tools.jsonp(url, callbackFunc, data);//url:请求路径 (string)，callbackFunc ：回调函数名（string）,data (JSON数据)
+//例子：
+$.tools.jsonp('xx.do','getData',{content:'test'});
+
+//写对应的回调函数,res为返回给前端的JSON格式数据
+//后台获取参数名为 callback的参数，并拼接 前端请求的数据 返回给前端 即返回例子中的： "getData({xxx:'xxx'})",该回调函数不允许定义在任何函数内部
+function getData(res)
+{
+// do something
+}
+```
