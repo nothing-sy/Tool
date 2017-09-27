@@ -70,7 +70,7 @@ $.fn.extend({
 	 * 正则检测是否为小数
 	 * @param {Object} num
 	 */
-	Regnumber: function(num) {
+	RegNumber: function(num) {
 		arguments[0] > 0 ? num : num = 2;
 		var res = true;
 		$.each($(this), function() {
