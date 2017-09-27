@@ -9,20 +9,16 @@ $.fn.extend({
 		newObj = arguments[0] ? arguments[0] : {};
 		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
 		$.each($(this).serializeArray(), function(i, _obj) {
-			if(obj.hasOwnProperty(_obj.name) && join)
-			{
+			if(obj.hasOwnProperty(_obj.name) && join) {
 				obj[_obj.name] += ',' + _obj.value;
 			} else {
 				obj[_obj.name] = _obj.value;
 			}
 		});
 		$.each(newObj, function(key, value) {
-			if(obj.hasOwnProperty(key) && join)
-			{
-
+			if(obj.hasOwnProperty(key) && join) {
 				obj[key] += ',' + value;
-			} else {
-				console.log(3);
+			} else {				
 				obj[key] = value;
 			}
 
@@ -76,20 +72,33 @@ $.fn.extend({
 	 */
 	Regnumber: function(num) {
 		arguments[0] > 0 ? num : num = 2;
-		console.log(num);
 		var res = true;
 		$.each($(this), function() {
 
 			if(!(eval('/^\\d+(\.\\d{1,' + num + '})?$/').test($(this).val()))) {
-
 				res = false;
-
 			}
 
 		});
 
 		return res;
 
+	},
+	RegPhone:function(){
+		//console.log(1)
+		var res=true;
+		$.each($(this), function() {
+			//只要11位数就好，不去检查什么数字开头了。。随时变得。
+			if(!/^\d{11}$/.test($(this).val()))
+			{
+				//return false;
+				res=false;
+			}
+			
+		});
+		
+		return res;
+		
 	}
 	
 
@@ -97,37 +106,37 @@ $.fn.extend({
 //自定义命名空间 rap
 $.extend({
 	tools: {
-		jsonp:function(url, callbackFunc, data) //跨域请求
-{
+		jsonp: function(url, callbackFunc, data) //跨域请求
+		{
 
-	var data = arguments[2] ? arguments[2] : ''; //默认参数为空
-	//var type = arguments[3] ? arguments[3] : 'get'; //默认类型为GET
+			var data = arguments[2] ? arguments[2] : ''; //默认参数为空
+			//var type = arguments[3] ? arguments[3] : 'get'; //默认类型为GET
 
-	if(url != '' && callbackFunc != '') {
-		$.ajax({
-			type: 'get',
-			dataType: 'jsonp',
-			url: url,
-			jsonp: "callback",
-			jsonpCallback: callbackFunc,
-			data: data,
-			async:true,
-			success: function(data) {
-				console.log('跨域请求成功');
-				//mui.alert('跨域请求成功');
+			if(url != '' && callbackFunc != '') {
+				$.ajax({
+					type: 'get',
+					dataType: 'jsonp',
+					url: url,
+					jsonp: "callback",
+					jsonpCallback: callbackFunc,
+					data: data,
+					async: true,
+					success: function(data) {
+						console.log('跨域请求成功');
+						//mui.alert('跨域请求成功');
 
-			},
-			error: function() {
+					},
+					error: function() {
 
-				console.log('跨域请求失败');
-				//mui.alert('跨域请求失败')
+						console.log('跨域请求失败');
+						//mui.alert('跨域请求失败')
 
-			}
-		});
+					}
+				});
 
-	} else
-		alert('URL，回调函数不能为空');
+			} else
+				alert('URL，回调函数不能为空');
 
-}
+		}
 	}
 });
