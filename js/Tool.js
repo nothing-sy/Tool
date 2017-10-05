@@ -1,4 +1,3 @@
-
 $.fn.extend({
 
 	/**
@@ -105,12 +104,11 @@ $.fn.extend({
 //自定义命名空间 rap
 $.extend({
 	tools: {
+		cd: 0,
 		jsonp: function(url, callbackFunc, data) //跨域请求
 		{
 
 			var data = arguments[2] ? arguments[2] : ''; //默认参数为空
-			//var type = arguments[3] ? arguments[3] : 'get'; //默认类型为GET
-
 			if(url != '' && callbackFunc != '') {
 				$.ajax({
 					type: 'get',
@@ -122,14 +120,10 @@ $.extend({
 					async: true,
 					success: function(data) {
 						console.log('跨域请求成功');
-						//mui.alert('跨域请求成功');
-
 					},
 					error: function() {
 
 						console.log('跨域请求失败');
-						//mui.alert('跨域请求失败')
-
 					}
 				});
 
@@ -146,7 +140,6 @@ $.extend({
 
 			type = arguments[1] ? arguments[1] : 'hybrid';
 			var arr, res = '';
-
 			switch(type) {
 				case 'number':
 					arr = '0123456789';
@@ -162,7 +155,24 @@ $.extend({
 				res += arr[Math.floor(Math.random() * (arr.length - 1))];
 			}
 			return res;
+		},
+
+		/**
+		 * 倒计时秒数 ，不对负数做判断，自行处理
+		 * @param {Object} time 默认倒数时间，时间单位为s
+		 * @param {Object} Func 回调函数 参数 剩余时间
+		 */
+		countDown: function(time, Func) {
+
+			time = arguments[0] ? arguments[0] : 60;
+			//t.cd=time;
+			//如果两个参数都没有传递，则默认为倒计时60s
+			return setInterval(function() {
+
+				Func(--time);
+
+			}, 1000);
+
 		}
 	}
-	})
-
+})
