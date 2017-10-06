@@ -173,6 +173,15 @@ $.extend({
 
 			}, 1000);
 
+		},
+		/**
+		 * 深拷贝JSON对象
+		 * @param {Object} oldValue 被拷贝的值
+		 */
+		deepCopy:function(oldValue){
+			
+			return $.extend(true, {}, oldValue);
+			
 		}
 	}
 })
