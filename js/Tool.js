@@ -27,6 +27,36 @@ $.fn.extend({
 		return obj;
 	},
 	/**
+	 * 将选择的数据转换成JSON数据，不局限于 表单序列化数据
+	 * @param {Object} join
+	 * @param {Object} newObj
+	 */
+	dataTojson: function(join,newObj) {
+		var obj = {};
+		join=arguments[0]?arguments[0]:false;
+		newObj = arguments[1] ? arguments[1] : {};
+		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
+		$.each($(this), function(i, _obj) {
+			if(obj.hasOwnProperty(_obj.name) && join) {
+				obj[_obj.name] += ',' + _obj.value;
+			} else {
+				obj[_obj.name] = _obj.value;
+			}
+		});
+		$.each(newObj, function(key, value) {
+			if(obj.hasOwnProperty(key) && join) {
+
+				obj[key] += ',' + value;
+			
+			} else {
+			
+				obj[key] = value;
+			}
+
+		});
+		return obj;
+	},
+	/**
 	 * 通过ID设置 日期控件 为当天
 	 */
 	setCurDateById: function() {
