@@ -30,9 +30,9 @@ $.fn.extend({
 	 * @param {Object} join
 	 * @param {Object} newObj
 	 */
-	dataTojson: function(join,newObj) {
+	dataTojson: function(join, newObj) {
 		var obj = {};
-		join=arguments[0]?arguments[0]:false;
+		join = arguments[0] ? arguments[0] : false;
 		newObj = arguments[1] ? arguments[1] : {};
 		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
 		$.each($(this), function(i, _obj) {
@@ -46,9 +46,9 @@ $.fn.extend({
 			if(obj.hasOwnProperty(key) && join) {
 
 				obj[key] += ',' + value;
-			
+
 			} else {
-			
+
 				obj[key] = value;
 			}
 
@@ -130,14 +130,28 @@ $.fn.extend({
 	 * 是否有空值
 	 */
 	hasEmpty: function() {
-		var isok=false;
+		var isok = false;
 		$.each($(this), function() {
 			if($(this).val() == '') {
-				isok=true;
+				isok = true;
 			}
 		});
 
 		return isok;
+
+	},
+	/**
+	 * 目前仅支持array和JSON
+	 * @param {Object} obj
+	 */
+	dataToInput: function(obj) {
+		var _t = $(this),
+			i = 0;
+		$.each(obj, function(key, value) {
+			$(_t[i]).val(value);
+			i++;
+
+		});
 
 	}
 
@@ -219,10 +233,10 @@ $.extend({
 		 * 深拷贝JSON对象
 		 * @param {Object} oldValue 被拷贝的值
 		 */
-		deepCopy:function(oldValue){
-			
+		deepCopy: function(oldValue) {
+
 			return $.extend(true, {}, oldValue);
-			
+
 		}
 	}
 })
