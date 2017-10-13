@@ -141,15 +141,26 @@ $.fn.extend({
 
 	},
 	/**
-	 * 目前仅支持array和JSON
+	 * 目前仅支持array和JSON,按顺序填写，超过的部分不予处理
 	 * @param {Object} obj
 	 */
 	dataToInput: function(obj) {
 		var _t = $(this),
 			i = 0;
 		$.each(obj, function(key, value) {
-			$(_t[i]).val(value);
+			if(i<$(_t).length)
+			{
+				
+				$(_t[i]).val(value);
+			
 			i++;
+			}
+			/*else
+			{
+				console.log('超过的部分'+JSON.stringify($(_t[i])));
+				
+			}*/
+			
 
 		});
 
