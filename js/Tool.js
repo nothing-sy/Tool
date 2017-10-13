@@ -123,11 +123,8 @@ $.fn.extend({
 				//return false;
 				res = false;
 			}
-
 		});
-
 		return res;
-
 	},
 	/**
 	 * 是否有空值
