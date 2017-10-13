@@ -128,6 +128,20 @@ $.fn.extend({
 
 		return res;
 
+	},
+	/**
+	 * 是否有空值
+	 */
+	hasEmpty: function() {
+		var isok=false;
+		$.each($(this), function() {
+			if($(this).val() == '') {
+				isok=true;
+			}
+		});
+
+		return isok;
+
 	}
 
 });
