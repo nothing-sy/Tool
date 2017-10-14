@@ -81,6 +81,22 @@ $.fn.extend({
 
 		return check_ok;
 	},
+	/**
+	 * 获取当前时间
+	 * @param {Object} split 年月日的分隔符号,返回字符串
+	 */
+	getCurDate:function(split){
+		var d=new Date();
+		split=arguments[0]?arguments[0]:'/';
+		var y=d.getFullYear();
+		var m=d.getMonth()+1;
+		var day=d.getDate();
+		var h=d.getHours();
+		var m=d.getMinutes();
+		var s=d.getSeconds();
+				
+		return y+split+m+split+day+' '+h+':'+m+':'+s;			
+	},
 
 	/**
 	 * 指定当前选中元素所具有的动作，并设置当前元素与下一个元素的关系
