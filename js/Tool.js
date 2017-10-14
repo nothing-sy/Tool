@@ -7,6 +7,7 @@ $.fn.extend({
 	formTojson: function(newObj, join) {
 		var obj = {};
 		newObj = arguments[0] ? arguments[0] : {};
+		join=arguments[1]?arguments[1]:false;//默认替换而不是用逗号隔开
 		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
 		$.each($(this).serializeArray(), function(i, _obj) {
 			if(obj.hasOwnProperty(_obj.name) && join) {
