@@ -26,6 +26,7 @@ $.fn.extend({
 		});
 		return obj;
 	},
+
 	/**
 	 * 将选择的数据转换成JSON数据，不局限于 表单序列化数据
 	 * @param {Object} join
@@ -85,17 +86,17 @@ $.fn.extend({
 	 * 获取当前时间
 	 * @param {Object} split 年月日的分隔符号,返回字符串
 	 */
-	getCurDate:function(split){
-		var d=new Date();
-		split=arguments[0]?arguments[0]:'/';
-		var y=d.getFullYear();
-		var m=d.getMonth()+1;
-		var day=d.getDate();
-		var h=d.getHours();
-		var m=d.getMinutes();
-		var s=d.getSeconds();
-				
-		return y+split+m+split+day+' '+h+':'+m+':'+s;			
+	getCurDate: function(split) {
+		var d = new Date();
+		split = arguments[0] ? arguments[0] : '/';
+		var y = d.getFullYear();
+		var m = d.getMonth() + 1;
+		var day = d.getDate();
+		var h = d.getHours();
+		var m = d.getMinutes();
+		var s = d.getSeconds();
+
+		return y + split + m + split + day + ' ' + h + ':' + m + ':' + s;
 	},
 
 	/**
@@ -165,19 +166,17 @@ $.fn.extend({
 		var _t = $(this),
 			i = 0;
 		$.each(obj, function(key, value) {
-			if(i<$(_t).length)
-			{
-				
+			if(i < $(_t).length) {
+
 				$(_t[i]).val(value);
-			
-			i++;
+
+				i++;
 			}
 			/*else
 			{
 				console.log('超过的部分'+JSON.stringify($(_t[i])));
 				
 			}*/
-			
 
 		});
 
@@ -265,6 +264,43 @@ $.extend({
 
 			return $.extend(true, {}, oldValue);
 
+		},
+		/**
+		 * 根据某个字段进行分组得出结果，接收数组类型，格式为[{yd:'a',res:'1'},{yd:'b',res:'2'},{yd:'a',res:'3'}]
+		 * 最终返回结果为[{yd:'a',res:'1,3'},{yd:'b',res:'2'}]
+		 * @param {Object} arr 传入的数组
+		 * @param {Object} groupby 需要分类的属性名，比如此处的 yd 
+		 * @param {Object} res 需要分类统计的属性名，比如此处要统计 res  
+		 */
+		groupBy: function(arr, groupby, res) {
+			var group = [];
+			var hasRecord = false;
+			var curGroupIndex;
+			$.each(arr, function(i) {
+				$.each(group, function(y) {
+					if(arr[i][groupby] == group[y][groupby]) {
+
+						curGroupIndex = y;
+						hasRecord = true;
+
+					}
+
+				});
+				if(!hasRecord) {
+					var jsons = {};
+					jsons[groupby] = arr[i][groupby];
+					jsons[res] = arr[i][res];
+					group.push(jsons);
+
+				} else {
+					group[curGroupIndex][res] += ',' + arr[i][res];
+					hasRecord = false;
+
+				}
+
+			});
+
+			return group;
 		}
 	}
 })

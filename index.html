@@ -25,11 +25,13 @@
 		</script>
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-/*var d=new Date();
-console.log(d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate());
-*/
+var arr=[{yd_no:'a',re:'r'},{yd_no:'s',re:'s'},{yd_no:'a',re:'t'},{yd_no:'a',re:'w'},{yd_no:'t',re:'q'}]
 
-console.log($.fn.getCurDate('-'))
+
+var res=$.tools.groupBy(arr,'yd_no','re');
+$.each(res, function(i) {
+	console.log(JSON.stringify(res[i]));
+});
 
 		</script>
 
