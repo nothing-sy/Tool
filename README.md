@@ -12,7 +12,7 @@
 - 一类是扩展空间名tools,此空间名下的方法调用为$.tools.xxx()
 - 另一类则是直接扩展fn空间名的属性和方法 $.fn.xxx()或者$('x').xxx()
 
-## 表单数据转换为JSON-***formTojson***
+## 表单数据转换为JSON -***formTojson***
 
 将form表单的数据转化为JSON数据，只局限于form标签 
 ```html
@@ -35,7 +35,7 @@ $('form').formTojson({name:'xxxx@163.com'},true);//{"name":"siyuan,xxxx@163.com"
 $('form').formTojson({name:'xxxx@163.com'},false);//{"name":"siyuan,xxxx@163.com","password":"123"}
 ```
 
-## 选择的数据转换为JSON-***dataTojson***
+## 选择的数据转换为JSON -***dataTojson***
 将jq选择器选择的对象数据转换为JSON数据，不局限于form元素
 
 ```html
@@ -84,5 +84,26 @@ $('#date,.date').checkDate();//true/false
 //第一个选取的对象是初始日期，第二个则为结束日期，返回字符串
 //参数getCurDate(split, start, end),split为日期分隔符,start,end参数为0-5，分别对应年月日时分秒
 $.tools.getCurDate('-',1,4);//"10-31 17:49"
+```
+
+## 指定当前元素与下一个元素的关系 -***nextElement***
+在JQ对象中，指定选取对象的当前元素与下一个元素的关系，比如，按下enter键，下一个元素要做什么动作
+
+```html
+<input type="text" name="c" id="c" value="5.254" /> 
+<input type="text" name="d" id="d" value="4" />
+
+```
+
+```javascript
+//nextElement(callback[t,list,i])=>t表示选取的元素列表中的每一个元素，list表示元素列，i表示下标
+//以下内容的效果为，绑定所有input元素，enter键keyup的时候，使下一个元素onfocus
+$('input').nextElement(function(t, list, i) {
+				$(t).on('keyup', function(event) {
+					if(event.keyCode == 13) {
+						$(list[i + 1]).focus();
+					}
+				})
+			});
 ```
 
