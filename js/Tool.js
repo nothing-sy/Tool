@@ -99,7 +99,7 @@ $.fn.extend({
 	},
 
 	/**
-	 * 正则检测是否为小数
+	 * 正则验证小数位数
 	 * @param {Object} num
 	 */
 	RegNumber: function(num) {
@@ -107,7 +107,7 @@ $.fn.extend({
 		var res = true;
 		$.each($(this), function() {
 
-			if(!(eval('/^\\d+(\.\\d{1,' + num + '})?$/').test($(this).val()))) {
+			if(!(eval('/^\\d+(\.\\d{1,' + num + '})?$/g').test($(this).val()))) {
 				res = false;
 			}
 
@@ -156,11 +156,7 @@ $.fn.extend({
 
 				i++;
 			}
-			/*else
-			{
-				console.log('超过的部分'+JSON.stringify($(_t[i])));
-				
-			}*/
+
 
 		});
 
@@ -241,12 +237,20 @@ $.extend({
 
 		},
 		/**
-		 * 深拷贝JSON对象
+		 * 深拷贝JSON或者数组对象
 		 * @param {Object} oldValue 被拷贝的值
 		 */
 		deepCopy: function(oldValue) {
-
-			return $.extend(true, {}, oldValue);
+				if(oldValue instanceof Array)
+				{
+			return $.extend(true, [], oldValue);		
+					
+				}
+				else
+				{
+					return $.extend(true, {}, oldValue);
+				}
+			
 
 		},
 		/**

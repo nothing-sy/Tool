@@ -19,8 +19,8 @@
 
 		</div>
 		<div id="dd">
-			<input type="text" name="c" id="c" value="5.254" /> 
-			<input type="text" name="d" id="d" value="4" />
+			<input type="text" name="c" id="c" value="" /> 
+			<input type="text" name="d" id="d" value="" />
 
 		</div>
 		
@@ -28,20 +28,11 @@
 		</script>
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			
-		$('input').nextElement(function(t,list,i){
-			
-			$(t).on('keyup',function(event){
-				if(event.keyCode==13)
-				{
-					$(list[i+1]).focus();
-					
-				}
-				
-			})
-			
-		});
-		
+
+console.log($.tools.getRandom(5,'number'));
+console.log($.tools.getRandom(5,'word'));
+console.log($.tools.getRandom(5,'hybrid'));
+
 		</script>
 
 	</body>

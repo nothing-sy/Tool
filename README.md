@@ -108,3 +108,88 @@ $('input').nextElement(function(t, list, i) {
 
 ```
 
+## 深拷贝数组或者JSON对象 -***deepCopy***
+
+```javascript
+	var arr=[1,2,3];
+	var jsons={a:1,b:2,c:3};
+	var newArr=$.tools.deepCopy(arr);
+	var newJson=$.tools.deepCopy(jsons);
+	arr[0]=9;
+	jsons.a=9;
+	console.log(JSON.stringify(arr));//[9,2,3]
+	console.log(JSON.stringify(jsons));//{"a":9,"b":2,"c":3}
+	console.log(JSON.stringify(newArr));//[1,2,3]
+	console.log(JSON.stringify(newJson));//{"a":1,"b":2,"c":3}
+```
+
+## 检验小数位数 -***RegNumber***
+```html
+	<input type="text" name="c" id="c" value="5.294" /> 
+			
+```
+
+```javascript
+//RegNumber(num) num=>检测小数点位数，该值默认为两位小数，不可小于0
+$('#c').RegNumber(3);//true
+```
+
+## 检验手机位数 -***RegPhone***
+
+```javascript
+//只单纯检测是否为11位，不作其他有效值判断，如有需要自行改变正则匹配
+console.log($('#c').RegPhone());
+```
+
+## 检验JQ对象中是否含有空值 - ***hasEmpty***
+
+```html
+<input type="text" name="c" id="c" value="1234567w8901" /> 
+			<input type="text" name="d" id="d" value="" />
+
+```
+
+```javascript
+$('#c,#d').hasEmpty();//true
+```
+
+
+## 将数据填入表单数据中 - ***dataToInput***
+根据传入对象数据顺序填入表单控件中,超过输入控件的数据不会进行处理
+
+```javascript
+var a=[1,2];
+var jsons={a:'a',b:'b'};
+$('#c,#d').dataToInput(a);
+$('#c,#d').dataToInput(jsons);
+```
+
+## jsonp跨域请求 - ***jsonp***
+$.tools.jsonp(url, callbackFunc, data); //url 请求地址，callbackFunc： 回调函数名，data:传输的数据
+```javascript
+$.tools.jsonp('http://www.xxx.com/xx.php','getResponce',{name:'siyuan'});
+//需要写一个与getResponce一样的回调函数。此处后台接受请求返回的格式如下
+//事实上 jsonp也并非一定要通过回调函数，只要跟后台返回的格式一一对应，我们同样能用数组、对象来存储数据
+/*
+  $fun=$_GET['callback'];//获取传递过来的函数名
+$name=$_GET['name'];
+ $data="{age:18,name:'$name'}";//需要返回的数据
+ echo "$fun($data)";
+ */
+
+function getResponce(res)
+{
+	alert(res.name+res.age);//siyuan18
+	
+}
+
+```
+## 获取随机数 - ***getRandom***
+
+getRandom(num, type);//num:获取位数，type:'number','word','hybrid'，意思是返回纯数字，纯字母，或者混合型随机数
+
+```
+console.log($.tools.getRandom(5,'number'));//00622
+console.log($.tools.getRandom(5,'word'));//tbEYI
+console.log($.tools.getRandom(5,'hybrid'));//F9liT
+```
