@@ -32,10 +32,10 @@ $.fn.extend({
 	 * @param {Object} join
 	 * @param {Object} newObj
 	 */
-	dataTojson: function(join, newObj) {
+	dataTojson: function( newObj,join) {
 		var obj = {};
-		join = arguments[0] ? arguments[0] : false;
-		newObj = arguments[1] ? arguments[1] : {};
+		
+		newObj = arguments[0] ? arguments[0] : {};
 		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
 		$.each($(this), function(i, _obj) {
 			if(obj.hasOwnProperty(_obj.name) && join) {
@@ -60,9 +60,9 @@ $.fn.extend({
 	/**
 	 * 通过ID设置 日期控件 为当天
 	 */
-	setCurDateById: function() {
+	setCurDate: function() {
 		$.each($(this), function(i) {
-			document.getElementById($(this).attr('id')).valueAsDate = new Date();
+			this.valueAsDate = new Date();
 		});
 
 	},
