@@ -1,6 +1,5 @@
 # Tool
-该工具基于Jquery.js
-日常应用到的工具,数据转换以及正则，表单验证，序列化等，持续更新中
+基于Jquery.js日常应用到的工具,数据转换以及正则，表单验证，序列化等，持续更新中
 
 ### 用法
 
@@ -13,9 +12,9 @@
 - 一类是扩展空间名tools,此空间名下的方法调用为$.tools.xxx()
 - 另一类则是直接扩展fn空间名的属性和方法 $.fn.xxx()或者$('x').xxx()
 
-## 表单数据转换为JSON
+## 表单数据转换为JSON-***formTojson***
 
-将form表单的数据转化为JSON数据，只局限于form标签 ***formTojson***
+将form表单的数据转化为JSON数据，只局限于form标签 
 ```html
 <form>
 	<input type="text" name="name" value="siyuan" />
@@ -36,7 +35,7 @@ $('form').formTojson({name:'xxxx@163.com'},true);//{"name":"siyuan,xxxx@163.com"
 $('form').formTojson({name:'xxxx@163.com'},false);//{"name":"siyuan,xxxx@163.com","password":"123"}
 ```
 
-## 选择的数据转换为JSON ***dataTojson***
+## 选择的数据转换为JSON-***dataTojson***
 将jq选择器选择的对象数据转换为JSON数据，不局限于form元素
 
 ```html
@@ -51,7 +50,7 @@ $('#c,#d').dataTojson({c:'xxxx@163.com'},true);//{"c":"5.254,xxxx@163.com","d":"
 
 ```
 
-## 初始化日期控件的值为当天日期 ***setCurDateById***
+## 初始化日期控件的值为当天日期 -***setCurDate***
 将jq选择器选择的日期控件默认为当前日期
 
 ```html
@@ -62,5 +61,28 @@ $('#c,#d').dataTojson({c:'xxxx@163.com'},true);//{"c":"5.254,xxxx@163.com","d":"
 ```javascript
 
 $('#date,.date').setCurDate();
+```
+
+## 检测日期选择条件是否正确 -***checkDate***
+日期选择条件的检查，结束日期必须大于等于初始日期
+
+```html
+<input type="date" name="date" id="date" value="" />
+<input type="date" name="date1" class="date" value="" />
+```
+
+```javascript
+//第一个选取的对象是初始日期，第二个则为结束日期，返回boolean
+$('#date,.date').checkDate();//true/false
+```
+
+## 获取当前具体日期时间 -***getCurDate***
+日期选择条件的检查，结束日期必须大于等于初始日期
+
+
+```javascript
+//第一个选取的对象是初始日期，第二个则为结束日期，返回字符串
+//参数getCurDate(split, start, end),split为日期分隔符,start,end参数为0-5，分别对应年月日时分秒
+$.tools.getCurDate('-',1,4);//"10-31 17:49"
 ```
 

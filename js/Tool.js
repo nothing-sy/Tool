@@ -32,9 +32,9 @@ $.fn.extend({
 	 * @param {Object} join
 	 * @param {Object} newObj
 	 */
-	dataTojson: function( newObj,join) {
+	dataTojson: function(newObj, join) {
 		var obj = {};
-		
+
 		newObj = arguments[0] ? arguments[0] : {};
 		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
 		$.each($(this), function(i, _obj) {
@@ -81,22 +81,6 @@ $.fn.extend({
 		}
 
 		return check_ok;
-	},
-	/**
-	 * 获取当前时间
-	 * @param {Object} split 年月日的分隔符号,返回字符串
-	 */
-	getCurDate: function(split) {
-		var d = new Date();
-		split = arguments[0] ? arguments[0] : '/';
-		var y = d.getFullYear();
-		var m = d.getMonth() + 1;
-		var day = d.getDate();
-		var h = d.getHours();
-		var m = d.getMinutes();
-		var s = d.getSeconds();
-
-		return y + split + m + split + day + ' ' + h + ':' + m + ':' + s;
 	},
 
 	/**
@@ -311,36 +295,85 @@ $.extend({
 		 * @param {Object} js JSON数组
 		 * @param {Object} arg1 指定需要的JSON数据，也可以用来指定数组排序
 		 */
-		jsonArrayToArray:function (js) {
+		jsonArrayToArray: function(js) {
 
-				var argLnt = arguments.length;
-				var arg = arguments;
-				var list = [];
-				if(argLnt > 1) {
+			var argLnt = arguments.length;
+			var arg = arguments;
+			var list = [];
+			if(argLnt > 1) {
 
-					$.each(js, function(i) {
-						var newArray = [];
-						for(var ob = 1; ob < argLnt; ob++) {
+				$.each(js, function(i) {
+					var newArray = [];
+					for(var ob = 1; ob < argLnt; ob++) {
 
-							newArray.push(js[i][arg[ob]]); //此处，每个函数内部都有一个arguments参数，所以这里要用的是jsonToarray的参数				
-						}
+						newArray.push(js[i][arg[ob]]); //此处，每个函数内部都有一个arguments参数，所以这里要用的是jsonToarray的参数				
+					}
 
-						list.push(newArray);
+					list.push(newArray);
+				});
+
+			} else {
+				$.each(js, function(i) {
+					var newArray = [];
+
+					$.each(js[i], function(key) {
+
+						newArray.push(js[i][key]);
 					});
+					list.push(newArray);
+				});
 
-				} else {
-					$.each(js, function(i) {
-						var newArray = [];
-
-						$.each(js[i], function(key) {
-
-							newArray.push(js[i][key]);
-						});
-						list.push(newArray);
-					});
-
-				}
-				return list;
 			}
+			return list;
+		},
+	
+	/**
+	 * 获取当前时间，start和end的参数为 0-5分别对应年月日时分秒，想要获取的月日时分，则start=1,end=4
+	 * @param {Object} split 日期间隔符
+	 * @param {Object} start 开始
+	 * @param {Object} end 结束
+	 */
+	getCurDate: function(split, start, end) {
+		var d = new Date();
+		var dateList = [],
+			res = '';
+		split = arguments[0] ? arguments[0] : '/';
+		start = arguments[1] ? arguments[1] : 0;
+		end = arguments[2] ? arguments[2] : 5;
+		dateList.push(d.getFullYear());
+		dateList.push(d.getMonth() + 1);
+		dateList.push(d.getDate());
+		dateList.push(d.getHours());
+		dateList.push(d.getMinutes());
+		dateList.push(d.getSeconds());
+		for(i = start; i < end + 1; i++) {
+			if(i < 2) {
+				if(i != end) {
+					res += dateList[i] + split;
+				} else {
+					res += dateList[i];
+				}
+
+			} else if(i == 2) {
+
+				if(i != end) {
+					res += dateList[i] + ' ';
+				} else {
+					res += dateList[i];
+				}
+
+			} else {
+				if(i != end) {
+					res += dateList[i] + ':';
+				} else {
+					res += dateList[i];
+				}
+			}
+
+		}
+
+		return res;
+
+	}
 	}
 })
