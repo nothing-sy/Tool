@@ -301,6 +301,46 @@ $.extend({
 			});
 
 			return group;
-		}
+		},
+
+		/**
+		 * JSON数组转数组
+		 * 例子：var n = jsonToarray(list, 'pay', 'processType');//如果只传入数组，则默认保存所有JSON数据
+		 * 输出 "[["365","2"],["3265","22"]]" ，结果顺序为[[pay,processType],[pay,processType]];
+		 * 
+		 * @param {Object} js JSON数组
+		 * @param {Object} arg1 指定需要的JSON数据，也可以用来指定数组排序
+		 */
+		jsonArrayToArray:function (js) {
+
+				var argLnt = arguments.length;
+				var arg = arguments;
+				var list = [];
+				if(argLnt > 1) {
+
+					$.each(js, function(i) {
+						var newArray = [];
+						for(var ob = 1; ob < argLnt; ob++) {
+
+							newArray.push(js[i][arg[ob]]); //此处，每个函数内部都有一个arguments参数，所以这里要用的是jsonToarray的参数				
+						}
+
+						list.push(newArray);
+					});
+
+				} else {
+					$.each(js, function(i) {
+						var newArray = [];
+
+						$.each(js[i], function(key) {
+
+							newArray.push(js[i][key]);
+						});
+						list.push(newArray);
+					});
+
+				}
+				return list;
+			}
 	}
 })

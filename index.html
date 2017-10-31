@@ -8,13 +8,13 @@
 
 	<body>
 		<div id="main">
-			<form >
-				
+			<form>
+
 				a<input type="text" name="a" id="a" value="135350244622" /> b
-			<input type="text" name="b" id="b" value="3.0000" />
+				<input type="text" name="b" id="b" value="3.0000" />
 
 			</form>
-			
+
 		</div>
 		<div id="dd">
 			c<input type="text" name="c" id="c" value="5.254" /> d
@@ -25,18 +25,27 @@
 		</script>
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-var arr=[{yd_no:'a',re:'r'},{yd_no:'s',re:'s'},{yd_no:'a',re:'t'},{yd_no:'a',re:'w'},{yd_no:'t',re:'q'}]
+			//var arr=[{yd_no:'a',re:'r'},{yd_no:'s',re:'s'},{yd_no:'a',re:'t'},{yd_no:'a',re:'w'},{yd_no:'t',re:'q'},{yd_no:'t',re:'qw'}]
 
+			var list = [{
+				"arrivalStation": "129",
+				"processType": "2",
+				"pay": "365",
+				"dept_name": "高桥营业一部",
+				"process": "装货"
+			}, {
+				"arrivalStation": "119",
+				"processType": "22",
+				"pay": "3265",
+				"dept_name": "高桥一部",
+				"process": "装货"
+			}];
 
-var res=$.tools.groupBy(arr,'yd_no','re');
-$.each(res, function(i) {
-	console.log(JSON.stringify(res[i]));
-});
-
+			
+			var n = $.tools.jsonArrayToArray(list, 'pay', 'processType');
+			console.log(JSON.stringify(n));
 		</script>
 
-		
-	
-
 	</body>
+
 </html>
