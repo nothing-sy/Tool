@@ -233,3 +233,18 @@ console.log(JSON.stringify($.tools.jsonArrayToArray(arr,'age')));//[[15],[18],[1
 console.log(JSON.stringify($.tools.jsonArrayToArray(arr)));//"[[15,"张三"],[18,"李四"],[12,"王五"],[15,"小王"],[12,"老王"]]"
 
 ```
+## 合并数组- ***mergeArray***
+$.tools.mergeArray(first,secone,newArray);//first:合并的第一个数组，secone：合并的第二个数组，
+newArray是否需要返回新数组，还是合并到first数组，默认(false)合并到first数组并返回,true则返回新数组
+
+```javascript
+var a=[1,2],b=[2,3],c=[4,5];
+/*
+var t=$.tools.mergeArray(a,b,true);
+var t=$.tools.mergeArray(a,b,false);*/
+var t=$.tools.mergeArray(a,b);
+console.log(JSON.stringify(a));//"[1,2,2,3]"
+console.log(JSON.stringify(b));//"[2,3]"	
+console.log(JSON.stringify(t));//"[1,2,2,3]"	
+
+```

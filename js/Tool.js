@@ -378,6 +378,25 @@ $.extend({
 
 		return res;
 
+	},
+	mergeArray:function(fir,sec,newArray)
+	{
+		
+		
+		
+		if(newArray)//如果需要返回新的数组
+		{
+			var resArray=[];
+			resArray.push.apply(resArray,fir);
+			resArray.push.apply(resArray,sec);
+			return resArray;
+		}
+		else
+		{
+			Array.prototype.push.apply(fir,sec);
+			return fir;
+		}
+		
 	}
 	}
 })

@@ -29,8 +29,15 @@
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 
-var arr=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'王五'},{age:15,name:'小王'},{age:12,name:'老王'}];
-console.log(JSON.stringify($.tools.jsonArrayToArray(arr)));
+var a=[1,2],b=[2,3],c=[4,5];
+/*
+var t=$.tools.mergeArray(a,b,true);
+var t=$.tools.mergeArray(a,b,false);*/
+var t=$.tools.mergeArray(a,b);
+console.log(JSON.stringify(a));
+console.log(JSON.stringify(b));
+console.log(JSON.stringify(t));
+
 
 
 		</script>
