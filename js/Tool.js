@@ -344,12 +344,7 @@ $.extend({
 		split = arguments[0] ? arguments[0] : '/';
 		start = arguments[1] ? arguments[1] : 0;
 		end = arguments[2] ? arguments[2] : 5;
-		dateList.push(d.getFullYear());
-		dateList.push(d.getMonth() + 1);
-		dateList.push(d.getDate());
-		dateList.push(d.getHours());
-		dateList.push(d.getMinutes());
-		dateList.push(d.getSeconds());
+		dateList.push(d.getFullYear(),d.getMonth() + 1,d.getDate(),d.getHours(),d.getMinutes(),d.getSeconds());
 		for(i = start; i < end + 1; i++) {
 			if(i < 2) {
 				if(i != end) {
