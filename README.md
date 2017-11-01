@@ -224,7 +224,8 @@ console.log(JSON.stringify($.tools.groupBy(arr1,'name','age')));//"[{"name":"张
 		 * 
 		 * @param {Object} js JSON数组
 		 * @param {Object} arg1 指定需要的JSON数据，也可以用来指定数组排序
-		 
+		 *@param {Object} arg2
+		 *@param {Object} arg3 ....
 ```javascript
 var arr=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'王五'},{age:15,name:'小王'},{age:12,name:'老王'}];
 console.log(JSON.stringify($.tools.jsonArrayToArray(arr,'age','name')));// "[[15,"张三"],[18,"李四"],[12,"王五"],[15,"小王"],[12,"老王"]]"
