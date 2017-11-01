@@ -193,3 +193,42 @@ console.log($.tools.getRandom(5,'number'));//00622
 console.log($.tools.getRandom(5,'word'));//tbEYI
 console.log($.tools.getRandom(5,'hybrid'));//F9liT
 ```
+
+## 倒计时 -***countDown***
+```javascript
+//$.tools.countDown(time,Func[cd]);
+//time:倒计时，cd:剩余时间,返回值：一个可以传递给 Window.clearInterval() 从而取消对 code 的周期性执行的值。
+$.tools.countDown(60,function(cd){	
+	console.log(cd);	
+});
+
+```
+
+## JSON数组分组函数 - ***groupBy***
+groupBy(arr, groupby, res) //arr:json数组,groupby:按某个属性分组 ,res：按groupby分组后得到的集合属性,
+【返回值】分组后的JSON数组
+
+```javascript
+var arr=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'王五'},{age:15,name:'小王'},{age:12,name:'老王'}];
+var arr1=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'张三'},{age:15,name:'小王'},{age:12,name:'张三'}];
+
+console.log(JSON.stringify($.tools.groupBy(arr,'age','name')));//"[{"age":15,"name":"张三,小王"},{"age":18,"name":"李四"},{"age":12,"name":"王五,老王"}]"
+console.log(JSON.stringify($.tools.groupBy(arr1,'name','age')));//"[{"name":"张三","age":"15,12,12"},{"name":"李四","age":18},{"name":"小王","age":15}]"
+
+```
+
+## JSON数组转换成数组- ***jsonArrayToArray***
+
+		 * 例子：var n = jsonToarray(list, 'pay', 'processType');//如果只传入数组，则默认保存所有JSON数据
+		 * 输出 "[["365","2"],["3265","22"]]" ，结果顺序为[[pay,processType],[pay,processType]];
+		 * 
+		 * @param {Object} js JSON数组
+		 * @param {Object} arg1 指定需要的JSON数据，也可以用来指定数组排序
+		 
+```javascript
+var arr=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'王五'},{age:15,name:'小王'},{age:12,name:'老王'}];
+console.log(JSON.stringify($.tools.jsonArrayToArray(arr,'age','name')));// "[[15,"张三"],[18,"李四"],[12,"王五"],[15,"小王"],[12,"老王"]]"
+console.log(JSON.stringify($.tools.jsonArrayToArray(arr,'age')));//[[15],[18],[12],[15],[12]]
+console.log(JSON.stringify($.tools.jsonArrayToArray(arr)));//"[[15,"张三"],[18,"李四"],[12,"王五"],[15,"小王"],[12,"老王"]]"
+
+```
