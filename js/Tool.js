@@ -157,7 +157,6 @@ $.fn.extend({
 				i++;
 			}
 
-
 		});
 
 	}
@@ -241,16 +240,12 @@ $.extend({
 		 * @param {Object} oldValue 被拷贝的值
 		 */
 		deepCopy: function(oldValue) {
-				if(oldValue instanceof Array)
-				{
-			return $.extend(true, [], oldValue);		
-					
-				}
-				else
-				{
-					return $.extend(true, {}, oldValue);
-				}
-			
+			if(oldValue instanceof Array) {
+				return $.extend(true, [], oldValue);
+
+			} else {
+				return $.extend(true, {}, oldValue);
+			}
 
 		},
 		/**
@@ -330,68 +325,63 @@ $.extend({
 			}
 			return list;
 		},
-	
-	/**
-	 * 获取当前时间，start和end的参数为 0-5分别对应年月日时分秒，想要获取的月日时分，则start=1,end=4
-	 * @param {Object} split 日期间隔符
-	 * @param {Object} start 开始
-	 * @param {Object} end 结束
-	 */
-	getCurDate: function(split, start, end) {
-		var d = new Date();
-		var dateList = [],
-			res = '';
-		split = arguments[0] ? arguments[0] : '/';
-		start = arguments[1] ? arguments[1] : 0;
-		end = arguments[2] ? arguments[2] : 5;
-		dateList.push(d.getFullYear(),d.getMonth() + 1,d.getDate(),d.getHours(),d.getMinutes(),d.getSeconds());
-		for(i = start; i < end + 1; i++) {
-			if(i < 2) {
-				if(i != end) {
-					res += dateList[i] + split;
+
+		/**
+		 * 获取当前时间，start和end的参数为 0-5分别对应年月日时分秒，想要获取的月日时分，则start=1,end=4
+		 * @param {Object} split 日期间隔符
+		 * @param {Object} start 开始
+		 * @param {Object} end 结束
+		 */
+		getCurDate: function(split, start, end) {
+			var d = new Date();
+			var dateList = [],
+				res = '';
+			split = arguments[0] ? arguments[0] : '/';
+			start = arguments[1] ? arguments[1] : 0;
+			end = arguments[2] ? arguments[2] : 5;
+			dateList.push(d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds());
+			for(i = start; i < end + 1; i++) {
+				if(i < 2) {
+					if(i != end) {
+						res += dateList[i] + split;
+					} else {
+						res += dateList[i];
+					}
+
+				} else if(i == 2) {
+
+					if(i != end) {
+						res += dateList[i] + ' ';
+					} else {
+						res += dateList[i];
+					}
+
 				} else {
-					res += dateList[i];
+					if(i != end) {
+						res += dateList[i] + ':';
+					} else {
+						res += dateList[i];
+					}
 				}
 
-			} else if(i == 2) {
+			}
 
-				if(i != end) {
-					res += dateList[i] + ' ';
-				} else {
-					res += dateList[i];
-				}
+			return res;
 
+		},
+		mergeArray: function(fir, sec, newArray) {
+
+			if(newArray) //如果需要返回新的数组
+			{
+				var resArray = [];
+				resArray.push.apply(resArray, fir);
+				resArray.push.apply(resArray, sec);
+				return resArray;
 			} else {
-				if(i != end) {
-					res += dateList[i] + ':';
-				} else {
-					res += dateList[i];
-				}
+				Array.prototype.push.apply(fir, sec);
+				return fir;
 			}
 
 		}
-
-		return res;
-
-	},
-	mergeArray:function(fir,sec,newArray)
-	{
-		
-		
-		
-		if(newArray)//如果需要返回新的数组
-		{
-			var resArray=[];
-			resArray.push.apply(resArray,fir);
-			resArray.push.apply(resArray,sec);
-			return resArray;
-		}
-		else
-		{
-			Array.prototype.push.apply(fir,sec);
-			return fir;
-		}
-		
-	}
 	}
 })

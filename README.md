@@ -44,7 +44,11 @@ $('form').formTojson({name:'xxxx@163.com'},false);//{"name":"siyuan,xxxx@163.com
 ```
 
 ```javascript
-/*用法与上例中的formTojson一致,只是选取的对象不同*/
+/*用法与上例中的formTojson一致,只是选取的对象不同。
+ 这个函数也可以用于把数组元素转换成JSON
+ $.fn.dataTojson([1,2,3]);//{"0":1,"1":2,"2":3}
+ 
+ */
 
 $('#c,#d').dataTojson({c:'xxxx@163.com'},true);//{"c":"5.254,xxxx@163.com","d":"4"}
 
@@ -201,7 +205,6 @@ console.log($.tools.getRandom(5,'hybrid'));//F9liT
 $.tools.countDown(60,function(cd){	
 	console.log(cd);	
 });
-
 ```
 
 ## JSON数组分组函数 - ***groupBy***
@@ -218,7 +221,6 @@ console.log(JSON.stringify($.tools.groupBy(arr1,'name','age')));//"[{"name":"张
 ```
 
 ## JSON数组转换成数组- ***jsonArrayToArray***
-
 		 * 例子：var n = jsonToarray(list, 'pay', 'processType');//如果只传入数组，则默认保存所有JSON数据
 		 * 输出 "[["365","2"],["3265","22"]]" ，结果顺序为[[pay,processType],[pay,processType]];
 		 * 
