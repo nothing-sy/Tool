@@ -388,7 +388,7 @@ $.extend({
 		 * @param {Object} obj 查找目标
 		 * @param {Object} arr 查找对象
 		 */
-		arrayHasElment:function(obj, arr) {
+		arrayHasElement:function(obj, arr) {
 				return arr.filter(function(el) {
 					var obj = this;
 					var res;
