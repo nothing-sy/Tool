@@ -250,3 +250,10 @@ console.log(JSON.stringify(b));//"[2,3]"
 console.log(JSON.stringify(t));//"[1,2,2,3]"	
 
 ```
+
+## 搜索数组内容- ***arrayHasElement***
+$.tools.arrayHasElement(obj,arr);//obj:需要搜索的对象，目前只支持array/json   arr:搜索目标，查找arr中是否有obj中的数据
+//返回查找到的数据数组
+```javascript
+$.tools.arrayHasElement([1,2,'ds'],[1,2,'a','v','d']);//[1,2]
+```
