@@ -7,32 +7,23 @@
 	</head>
 
 	<body>
-		<div id="main">
-			<form>
 
-	<input type="text" name="name" value="siyuan" />
-	<input type="text" name="password" value="123" />
-
-<input type="date" name="date" id="date" value="" />
-<input type="date" name="date1" class="date" value="" />
-</form>
+		<div siyuan-for='li in arr1'>
 
 		</div>
-		<div id="dd">
-			<input type="text" name="c" id="c" value="" /> 
-			<input type="text" name="d" id="d" value="" />
+		<ul siyuan-for='li in arr'>
 
-		</div>
-		
+		</ul>
+
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js">
 		</script>
+
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-
-var arr=[1,2,3,4];
-console.log(JSON.stringify($.fn.dataTojson([1,2,3])));
+			var arr = [1, 2, 3, 4, 5];
+			var arr1 = [1, 2, 3, 4, 5];
 		</script>
-
+		<script src="siyuan-for.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 
 </html>

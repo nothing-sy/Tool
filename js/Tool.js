@@ -382,6 +382,24 @@ $.extend({
 				return fir;
 			}
 
-		}
+		},
+		/**
+		 * 查询数组中是否存在指定的数据，目前只支持传入Object,返回查找出的数据数组
+		 * @param {Object} obj 查找目标
+		 * @param {Object} arr 查找对象
+		 */
+		arrayHasElment:function(obj, arr) {
+				return arr.filter(function(el) {
+					var obj = this;
+					var res;
+					$.each(obj, function(i) {
+						if(el == obj[i]) {
+							res = el;
+						}
+					});
+					return res;
+				}, obj);
+				
+			}
 	}
 })
