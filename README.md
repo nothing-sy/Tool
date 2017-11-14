@@ -32,7 +32,7 @@ join为false时，直接替换相同的属性，替换等级为：额外对象�
 
 $('form').formTojson({email:'xxxx@163.com'},true);//{"name":"siyuan","password":"123","email":"xxxx@163.com"}
 $('form').formTojson({name:'xxxx@163.com'},true);//{"name":"siyuan,xxxx@163.com","password":"123"}
-$('form').formTojson({name:'xxxx@163.com'},false);//{"name":"siyuan,xxxx@163.com","password":"123"}
+$('form').formTojson({name:'xxxx@163.com'},false);//{"name":"xxxx@163.com","password":"123"}
 ```
 
 ## 选择的数据转换为JSON -***dataTojson***

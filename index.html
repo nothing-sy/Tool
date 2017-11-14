@@ -11,19 +11,21 @@
 		<div siyuan-for='li in arr1'>
 
 		</div>
-		<ul siyuan-for='li in arr'>
-
-		</ul>
+		<form action="" method="post">
+			
+			<input type="text" name="name" id="name" value="ssss" />
+		</form>
 
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js">
 		</script>
 
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var arr = [1, 2, 3, 4, 5];
-			var arr1 = [1, 2, 3, 4, 5];
+			console.log(JSON.stringify($('form').formTojson({email:'xxxx@163.com'},true)));//{"name":"siyuan","password":"123","email":"xxxx@163.com"}
+console.log(JSON.stringify($('form').formTojson({name:'xxxx@163.com'},true)));//{"name":"siyuan,xxxx@163.com","password":"123"}
+console.log(JSON.stringify($('form').formTojson({name:'xxxx@163.com'},false)));//{"name":"siyuan,xxxx@163.com","password":"123"}
 		</script>
-		<script src="siyuan-for.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="siyuan-for.js" type="text/javascript" charset="utf-8"></script>-->
 	</body>
 
 </html>
