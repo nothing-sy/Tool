@@ -388,18 +388,38 @@ $.extend({
 		 * @param {Object} obj 查找目标
 		 * @param {Object} arr 查找对象
 		 */
-		arrayHasElement:function(obj, arr) {
-				return arr.filter(function(el) {
-					var obj = this;
-					var res;
-					$.each(obj, function(i) {
-						if(el == obj[i]) {
-							res = el;
-						}
-					});
-					return res;
-				}, obj);
-				
+		arrayHasElement: function(obj, arr) {
+			return arr.filter(function(el) {
+				var obj = this;
+				var res;
+				$.each(obj, function(i) {
+					if(el == obj[i]) {
+						res = el;
+					}
+				});
+				return res;
+			}, obj);
+
+		},
+		/**
+		 * 对象赋值，把B属性的值赋值给A,是赋值不是复制，两者结构必须一致，如果不一致，返回false
+		 * @param {Object} a
+		 * @param {Object} b
+		 */
+		jsonAssignment: function(a, b) {
+
+			for(key in a) {
+
+				if(key in b) {
+					a[key] = b[key];
+
+				} else {
+					return false;
+
+				}
+
 			}
+			return true;
+		}
 	}
 })

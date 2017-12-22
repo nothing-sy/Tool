@@ -16,42 +16,16 @@
 		<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var arr = [1, 2, 3];
-
-			function arrayHasElment(obj, arr) {
-				return arr.filter(function(el) {
-					var obj = this;
-					var res;
-					$.each(obj, function(i) {
-						if(el == obj[i]) {
-							res = el;
-						}
-					});
-					return res;
-				}, obj);
-				
-			}
-
-			/*function arrayHasElment(obj, arr) {
-				var newarr=[];
-				$.each(obj, function(i) {
-					$.each(arr,function(x){
-						
-						if(obj[i]==arr[x])
-						{
-							newarr.push(arr[x]);
-							
-						}
-						
-					})
-				});
-				
-				
-				return newarr;
-				
-			}*/
-
-			console.log(JSON.stringify($.tools.arrayHasElement([1,2,'ds'],[1,2,'a','v','d'])));
+	var a={a:1};
+	var b={c:8,v:8}
+	console.log($.tools.jsonAssignment(a,b));
+	console.log(JSON.stringify(a));
+	console.log(JSON.stringify(b));
+	
+	a.a=111;
+console.log(JSON.stringify(a));
+	console.log(JSON.stringify(b));
+	
 		</script>
 	</body>
 
