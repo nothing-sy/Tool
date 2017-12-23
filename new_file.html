@@ -16,15 +16,12 @@
 		<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-	var a={a:1};
-	var b={c:8,v:8}
-	console.log($.tools.jsonAssignment(a,b));
-	console.log(JSON.stringify(a));
-	console.log(JSON.stringify(b));
+	var js=[{a:1},{a:2},{a:3}];
 	
-	a.a=111;
-console.log(JSON.stringify(a));
-	console.log(JSON.stringify(b));
+	
+	$.tools.jsonArrayReplace(js,'a','1','*');
+	console.log(JSON.stringify(js));
+	
 	
 		</script>
 	</body>

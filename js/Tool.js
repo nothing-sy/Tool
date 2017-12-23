@@ -407,19 +407,30 @@ $.extend({
 		 * @param {Object} b
 		 */
 		jsonAssignment: function(a, b) {
-
 			for(key in a) {
-
 				if(key in b) {
 					a[key] = b[key];
-
 				} else {
 					return false;
-
 				}
-
 			}
 			return true;
+		},
+		/**
+		 * 替换对象中具有特定值的某个属性为新值
+		 * @param {Object} arr 需要更改的数组
+		 * @param {Object} prop 需要替换的属性
+		 * @param {Object} oldV 旧值
+		 * @param {Object} newV 新值
+		 */
+		jsonArrayReplace: function(arr, prop, oldV, newV) {
+
+			for(i in arr) {
+
+				arr[i][prop] = arr[i][prop] == oldV ? newV : arr[i][prop];
+
+			}
+			return arr;
 		}
 	}
 })
