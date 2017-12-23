@@ -257,3 +257,18 @@ $.tools.arrayHasElement(obj,arr);//obj:需要搜索的对象，目前只支持ar
 ```javascript
 $.tools.arrayHasElement([1,2,'ds'],[1,2,'a','v','d']);//[1,2]
 ```
+
+## 对象赋值- ***jsonAssignment***
+//可用于结构化数据
+```
+$.tools.jsonAssignment(a,b);
+//将b的属性全部赋值给a，两者结构必须一致，成功返回true, 失败返回false
+```
+
+## json数组属性值替换- ***jsonArrayReplace***
+$.tools.jsonArrayReplace(arr, prop, oldV, newV);
+```
+var js=[{a:1},{a:2},{a:3}];	
+$.tools.jsonArrayReplace(js,'a','1','*');
+console.log(JSON.stringify(js));//[{"a":"*"},{"a":2},{"a":3}]
+```
