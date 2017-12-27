@@ -4,8 +4,18 @@
 ### 用法
 
 ```
+script标签导入，将Tools.js文件中 第一行代码var $=require('jquery');以及最后一行代码module.export=$;去掉之后，在文件中引入下面两行代码
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/Tool.js"></script>
+
+npm 安装
+
+npm install --save-dev jquery
+npm install --save-dev jqtools
+
+var $=require('jqtools');//$仍然是JQ对象，此时的JQ对象已经做了扩展操作，函数使用方法如下。
+最后使用webpack打包生成即可。
+
 ```
 
 ### 分类
