@@ -1,10 +1,5 @@
-function extendTool($){
-	
-	
-	
-
-
-
+var $=require('jquery');
+function extendTool(){
 $.fn.extend({
 
 	/**
