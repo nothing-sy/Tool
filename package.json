@@ -1,0 +1,27 @@
+{
+  "name": "jqtools",
+  "version": "1.0.0",
+  "description": "tools base on jquery for dom or data\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[D",
+  "main": "js/Tool.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heartOfblack/Tool.git"
+  },
+  "keywords": [
+    "jquery",
+    "tools"
+  ],
+  "author": "heartofblack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heartOfblack/Tool/issues"
+  },
+  "homepage": "https://github.com/heartOfblack/Tool#readme",
+  "devDependencies": {
+    "jqtools": "^1.0.0",
+    "jquery": "^3.2.1"
+  }
+}
