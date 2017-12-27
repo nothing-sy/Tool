@@ -1,6 +1,6 @@
 {
   "name": "jqtools",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "tools base on jquery for DOM or data",
   "main": "js/Tool.js",
   "scripts": {
