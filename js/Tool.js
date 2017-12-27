@@ -1,7 +1,5 @@
-var $=require('jquery');
-function extendTool(){
+var $=require("jquery");
 $.fn.extend({
-
 	/**
 	 * @param {Object} join 遇到相同的参数是否合并，合并用逗号隔开
 	 * @param {Object} newObj 表单外的参数
@@ -437,7 +435,7 @@ $.extend({
 	}
 })
 
-}
 
 
-module.exports=extendTool;
+
+module.exports=$;
