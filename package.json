@@ -1,0 +1,24 @@
+{
+  "name": "jqtools",
+  "version": "1.0.0",
+  "description": "tools base on jquery for DOM or data",
+  "main": "js/Tool.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heartOfblack/Tool.git"
+  },
+  "keywords": [
+    "jquery",
+    "tools",
+    "DOM"
+  ],
+  "author": "heartofblack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heartOfblack/Tool/issues"
+  },
+  "homepage": "https://github.com/heartOfblack/Tool#readme"
+}
