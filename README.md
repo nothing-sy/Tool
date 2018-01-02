@@ -277,3 +277,23 @@ var js=[{a:1},{a:2},{a:3}];
 $.tools.jsonArrayReplace(js,'a','1','*');
 console.log(JSON.stringify(js));//[{"a":"*"},{"a":2},{"a":3}]
 ```
+
+## 数组索引查找- ***findIndex***
+
+```
+/*$.tools.findIndex(arr, val);
+arr可以是数组也可以是json
+val要查找的值
+
+返回值：
+没有找到 返回 null
+只有一个直接返回索引
+多个结果返回 结果集(数组)
+*/
+var arr={a:'1',b:'2',c:'8',d:'2'};
+$.tools.findIndex(arr,2);//['b','d'];
+$.tools.findIndex(arr,28);//null
+$.tools.findIndex(arr,8);//c
+
+```
+

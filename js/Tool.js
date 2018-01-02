@@ -1,4 +1,4 @@
-var $=require("jquery");
+var $ = require("jquery");
 $.fn.extend({
 	/**
 	 * @param {Object} join 遇到相同的参数是否合并，合并用逗号隔开
@@ -341,31 +341,9 @@ $.extend({
 			end = arguments[2] ? arguments[2] : 5;
 			dateList.push(d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds());
 			for(i = start; i < end + 1; i++) {
-				if(i < 2) {
-					if(i != end) {
-						res += dateList[i] + split;
-					} else {
-						res += dateList[i];
-					}
-
-				} else if(i == 2) {
-
-					if(i != end) {
-						res += dateList[i] + ' ';
-					} else {
-						res += dateList[i];
-					}
-
-				} else {
-					if(i != end) {
-						res += dateList[i] + ':';
-					} else {
-						res += dateList[i];
-					}
-				}
+				i < 2 && (i != end && (res += dateList[i] + split) || (res += dateList[i])) || i == 2 && (i != end && (res += dateList[i] + ' ') || (res += dateList[i])) || (i != end && (res += dateList[i] + ':') || (res += dateList[i]));
 
 			}
-
 			return res;
 
 		},
@@ -402,19 +380,24 @@ $.extend({
 
 		},
 		/**
-		 * 对象赋值，把B属性的值赋值给A,是赋值不是复制，两者结构必须一致，如果不一致，返回false
+		 * 对象赋值，把B属性的值赋值给A,是赋值不是复制，两者结构必须一致，如果不一致，返回false，赋值成功返回赋值后的对象
 		 * @param {Object} a
 		 * @param {Object} b
 		 */
 		jsonAssignment: function(a, b) {
+			var res = true;
 			for(key in a) {
-				if(key in b) {
-					a[key] = b[key];
-				} else {
-					return false;
-				}
+
+				key in b || (res = false);
+
 			}
-			return true;
+			return res && ((function() {
+				for(key in a) {
+
+					a[key] = b[key];
+
+				};
+			})(), a) || false;
 		},
 		/**
 		 * 替换对象中具有特定值的某个属性为新值
@@ -431,11 +414,24 @@ $.extend({
 
 			}
 			return arr;
+		},
+
+		/**
+		 * 寻找索引
+		 * @param {Object} obj 寻找目标对象
+		 * @param {Object} val 寻找的值
+		 * 返回值所对应的下角标
+		 */
+		findIndex: function(obj, val) {
+
+			var index = [];
+			$.each(obj, function(key, value) {
+				value == val && index.push(key);
+			});
+
+			return index.length > 0 && (index.length == 1 && index[0] || index) || null;
 		}
 	}
 })
 
-
-
-
-module.exports=$;
+module.exports = $;
