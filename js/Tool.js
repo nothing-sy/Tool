@@ -430,6 +430,10 @@ $.extend({
 			});
 
 			return index.length > 0 && (index.length == 1 && index[0] || index) || null;
+		},
+		findString:function(Str,val){
+			return Str.indexOf(val)>-1&&true||false;
+			
 		}
 	}
 })

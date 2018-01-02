@@ -72,7 +72,7 @@ var $=__webpack_require__(1);
 var arr={a:'1',b:9,f:4};
 var arr1={a:'18',b:'c',f:4};
 
-console.log(JSON.stringify($.tools.jsonAssignment(arr,arr1)));
+console.log($.tools.findString("chensiyuan","isy"));
 //$.tools.findIndex(arr,2);
 
 
@@ -462,24 +462,24 @@ $.extend({
 
 		},
 		/**
-		 * 对象赋值，把B属性的值赋值给A,是赋值不是复制，两者结构必须一致，如果不一致，返回false
+		 * 对象赋值，把B属性的值赋值给A,是赋值不是复制，两者结构必须一致，如果不一致，返回false，赋值成功返回赋值后的对象
 		 * @param {Object} a
 		 * @param {Object} b
 		 */
 		jsonAssignment: function(a, b) {
-			var res=true;
+			var res = true;
 			for(key in a) {
-			
-				key in b||(res= false);
-				
+
+				key in b || (res = false);
+
 			}
-			return res&&((function(){
+			return res && ((function() {
 				for(key in a) {
-			
-				a[key]=b[key];
-				
-			};	
-			})(),a)||false;
+
+					a[key] = b[key];
+
+				};
+			})(), a) || false;
 		},
 		/**
 		 * 替换对象中具有特定值的某个属性为新值
@@ -512,6 +512,10 @@ $.extend({
 			});
 
 			return index.length > 0 && (index.length == 1 && index[0] || index) || null;
+		},
+		findString:function(Str,val){
+			return Str.indexOf(val)>-1&&true||false;
+			
 		}
 	}
 })

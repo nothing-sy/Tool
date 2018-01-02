@@ -267,7 +267,7 @@ $.tools.arrayHasElement([1,2,'ds'],[1,2,'a','v','d']);//[1,2]
 //可用于结构化数据
 ```
 $.tools.jsonAssignment(a,b);
-//将b的属性全部赋值给a，两者结构必须一致，成功返回true, 失败返回false
+//将b的属性全部赋值给a，b的属性必须与a完全一致才允许赋值，成功返回true, 失败返回false
 ```
 
 ## json数组属性值替换- ***jsonArrayReplace***
@@ -297,3 +297,10 @@ $.tools.findIndex(arr,8);//c
 
 ```
 
+## 查找字符串中的某一段- ***findString***
+```
+$.tools.findString(str,val);
+$.tools.findString("siyuan","isy");//false
+$.tools.findString("siyuan","sy");//true
+
+```
