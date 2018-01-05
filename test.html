@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 	</head>
+
 	<body>
 		<script type="text/javascript">
-			var a=1;
-			console.log('a' in {a:1}&&(a=5)||(return false));
-//			console.log(a);
+			function arrayInputJson(j, a, p) {
+				return j.length >= a.length && (function() {
+					for(i in j) {
+						j[i][p] = a[i];
+					}
+				}(), j) || false;
+
+			}
+			console.log(JSON.stringify(arrayInputJson([{
+						a: 1
+				}, {
+						a: 2
+					}], [2, 1], 'a')));
 		</script>
 	</body>
+
 </html>

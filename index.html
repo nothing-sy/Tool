@@ -14,7 +14,7 @@
 	console.log(/^[1|5|7][0-9]{6}[0-9Aa]/.test('74174970'));
 	
 	//数据延后交换
-var arr=	[1,2,3,4];
+var arr=	[{name:'a',age:1},{name:'b',age:2},{name:'c',age:3},{name:'d',age:4}];
 	
 	/**
 	 * JSON数据‘轮流排队’,用于一组循环排列的数据 [1,2,3,4]=》[2,3，4,1] //如果是 JSON数组，需要排序某些属性而不更改原本的位置，则单独抽取出那个属性作为数组，再重新赋值
@@ -28,7 +28,10 @@ var arr=	[1,2,3,4];
 		return arr;
 	}
 	
-	console.log(queue(arr,true));
+	var newarr=arrayQueue(arr,true);
+	$.tools.jsonAssignment(arr,newarr);
+	console.log(JSON.stringify(arr));
+	
 </script>-->
 	</body>
 

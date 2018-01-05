@@ -311,6 +311,7 @@ $.tools.findString("siyuan","sy");//true
 /**
 	 * JSON数据‘轮流排队’,用于一组循环排列的数据 [1,2,3,4]=》[2,3，4,1] 
 	 //如果是 JSON数组，需要排序某些属性而不更改原本的位置，则单独抽取出那个属性作为数组，再重新赋值
+	 //结合$.tools.arrayInputJson函数使用
 	 * @param {Object} arr 需要排列的数组
 	 * @param {Object} turn 第一个排到最后面 OR  最后面排到最前面 默认向后排队(false)
 	 */
@@ -324,4 +325,20 @@ $.tools.findString("siyuan","sy");//true
 ```javascript
 $('x').RegId();//true or false
 
+```
+
+
+## JSON数组属性抽取- ***extractArrayFromJson***
+```javascript
+var arrAll=	[{name:'a',age:1},{name:'b',age:2},{name:'c',age:3},{name:'d',age:4}];
+$.tools.extractArrayFromJson(arrAll,'name');//"["a","b","c","d"]"
+
+```
+
+## JSON数组属性赋值 - ***arrayInputJson***
+
+```javascript
+var arrAll=	[{name:'a',age:1},{name:'b',age:2},{name:'c',age:3},{name:'d',age:4}];
+var arr=[4,5,6,7];
+$.tools.arrayInputJson(arrAll,arr,'age');//[{name:'a',age:4},{name:'b',age:5},{name:'c',age:6},{name:'d',age:7}]
 ```

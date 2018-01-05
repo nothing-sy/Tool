@@ -128,21 +128,20 @@ $.fn.extend({
 		});
 		return res;
 	},
-	RegId:function(){
-		
-	var res = true;
+	RegId: function() {
+
+		var res = true;
 		$.each($(this), function() {
-			
+
 			if(!/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test($(this).val())) {
 				//return false;
 				res = false;
 			}
 		});
-		return res;	
-		
-		
+		return res;
+
 	},
-	
+
 	/**
 	 * 是否有空值
 	 */
@@ -208,16 +207,15 @@ $.extend({
 
 		},
 		/**
-	 * 数组队列,用于一组循环排列的数据 [1,2,3,4]=》[2,3，4,1] //如果是 JSON数组，需要排序某些属性而不更改原本的位置，则单独抽取出那个属性作为数组，再重新赋值
-	 * @param {Object} arr 需要排列的数组
-	 * @param {Object} turn 第一个排到最后面 OR  最后面排到最前面 默认向后排队(false)
-	 */
-	 arrayQueue:function(arr,turn)
-	{
-		
-		turn&&arr.unshift(arr.pop())||arr.push(arr.shift());
-		return arr;
-	},
+		 * 数组队列,用于一组循环排列的数据 [1,2,3,4]=》[2,3，4,1] //如果是 JSON数组，需要排序某些属性而不更改原本的位置，则单独抽取出那个属性作为数组，再重新赋值
+		 * @param {Object} arr 需要排列的数组
+		 * @param {Object} turn 第一个排到最后面 OR  最后面排到最前面 默认向后排队(false)
+		 */
+		arrayQueue: function(arr, turn) {
+
+			turn && arr.unshift(arr.pop()) || arr.push(arr.shift());
+			return arr;
+		},
 
 		/**
 		 * @param {Object} num 想要返回的位数
@@ -426,6 +424,37 @@ $.extend({
 			})(), a) || false;
 		},
 		/**
+		 * 将数组按顺序赋值给JSON的某个属性
+		 * @param {Object} j json数组
+		 * @param {Object} a 数组
+		 * @param {Object} p 属性名
+		 */
+		arrayInputJson: function(j, a, p) {
+		return j.length >= a.length && (function() {
+					for(i in j) {
+						j[i][p] = a[i];
+					}
+				}(), j) || false;
+
+		},
+		
+		/**
+		 *  从JSON中抽取某一属性并返回该属性数组
+		 * @param {Object} j JSON数据
+		 * @param {Object} p 需要抽取的key
+		 */
+		extractArrayFromJson:function(j,p){
+			var arr=[];
+			for(i in j)
+			{
+				arr.push(j[i][p]);
+			}
+			
+			return arr;
+			
+		},
+
+		/**
 		 * 替换对象中具有特定值的某个属性为新值
 		 * @param {Object} arr 需要更改的数组
 		 * @param {Object} prop 需要替换的属性
@@ -457,9 +486,9 @@ $.extend({
 
 			return index.length > 0 && (index.length == 1 && index[0] || index) || null;
 		},
-		findString:function(Str,val){
-			return Str.indexOf(val)>-1&&true||false;
-			
+		findString: function(Str, val) {
+			return Str.indexOf(val) > -1 && true || false;
+
 		}
 	}
 })
