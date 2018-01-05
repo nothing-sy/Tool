@@ -72,7 +72,7 @@ $('#c,#d').dataTojson({c:'xxxx@163.com'},true);//{"c":"5.254,xxxx@163.com","d":"
 <input type="date" name="date1" class="date" value="" />
 ```
 
-```javascript
+```
 
 $('#date,.date').setCurDate();
 ```
@@ -163,7 +163,7 @@ console.log($('#c').RegPhone());
 
 ```
 
-```javascript
+```
 $('#c,#d').hasEmpty();//true
 ```
 
@@ -196,9 +196,9 @@ function getResponce(res)
 	alert(res.name+res.age);//siyuan18
 	
 }
-
-```
 ## 获取随机数 - ***getRandom***
+```javascript
+
 
 getRandom(num, type);//num:获取位数，type:'number','word','hybrid'，意思是返回纯数字，纯字母，或者混合型随机数
 
@@ -221,7 +221,7 @@ $.tools.countDown(60,function(cd){
 groupBy(arr, groupby, res) //arr:json数组,groupby:按某个属性分组 ,res：按groupby分组后得到的集合属性,
 【返回值】分组后的JSON数组
 
-```javascript
+```
 var arr=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'王五'},{age:15,name:'小王'},{age:12,name:'老王'}];
 var arr1=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'张三'},{age:15,name:'小王'},{age:12,name:'张三'}];
 
@@ -249,7 +249,7 @@ console.log(JSON.stringify($.tools.jsonArrayToArray(arr)));//"[[15,"张三"],[18
 $.tools.mergeArray(first,secone,newArray);//first:合并的第一个数组，secone：合并的第二个数组，
 newArray是否需要返回新数组，还是合并到first数组，默认(false)合并到first数组并返回,true则返回新数组
 
-```javascript
+```
 var a=[1,2],b=[2,3],c=[4,5];
 var t=$.tools.mergeArray(a,b,true);
 var t=$.tools.mergeArray(a,b,false);
@@ -259,13 +259,13 @@ var t=$.tools.mergeArray(a,b);
 ## 搜索数组内容- ***arrayHasElement***
 $.tools.arrayHasElement(obj,arr);//obj:需要搜索的对象，目前只支持array/json   arr:搜索目标，查找arr中是否有obj中的数据
 //返回查找到的数据数组
-```javascript
+```
 $.tools.arrayHasElement([1,2,'ds'],[1,2,'a','v','d']);//[1,2]
 ```
 
 ## 对象赋值- ***jsonAssignment***
 //可用于结构化数据
-```
+```javascript
 $.tools.jsonAssignment(a,b);
 //将b的属性全部赋值给a，b的属性必须与a完全一致才允许赋值，成功返回true, 失败返回false
 ```
@@ -280,7 +280,7 @@ console.log(JSON.stringify(js));//[{"a":"*"},{"a":2},{"a":3}]
 
 ## 数组索引查找- ***findIndex***
 
-```
+```javascript
 /*$.tools.findIndex(arr, val);
 arr可以是数组也可以是json
 val要查找的值
@@ -302,5 +302,26 @@ $.tools.findIndex(arr,8);//c
 $.tools.findString(str,val);
 $.tools.findString("siyuan","isy");//false
 $.tools.findString("siyuan","sy");//true
+
+```
+
+
+## 数据队列- ***arrayQueue***
+```javascript
+/**
+	 * JSON数据‘轮流排队’,用于一组循环排列的数据 [1,2,3,4]=》[2,3，4,1] 
+	 //如果是 JSON数组，需要排序某些属性而不更改原本的位置，则单独抽取出那个属性作为数组，再重新赋值
+	 * @param {Object} arr 需要排列的数组
+	 * @param {Object} turn 第一个排到最后面 OR  最后面排到最前面 默认向后排队(false)
+	 */
+	var arr=[1,2,3,4];
+	$.tools.queue(arr,true);//[4,1,2,3]
+	$.tools.queue(arr);//默认值为false，向后排 [2,3,4,1]
+
+```
+
+## 身份证验证- ***RegId***
+```javascript
+$('x').RegId();//true or false
 
 ```

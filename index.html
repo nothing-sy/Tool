@@ -7,11 +7,29 @@
 	</head>
 
 	<body>
-		
+		<script src="bundle.js" type="text/javascript" charset="utf-8"></script>
 		<!--<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>-->
-		<script type="text/javascript" src="bundle.js">
-		</script>
-
+		
+<!--<script type="text/javascript">
+	console.log(/^[1|5|7][0-9]{6}[0-9Aa]/.test('74174970'));
+	
+	//数据延后交换
+var arr=	[1,2,3,4];
+	
+	/**
+	 * JSON数据‘轮流排队’,用于一组循环排列的数据 [1,2,3,4]=》[2,3，4,1] //如果是 JSON数组，需要排序某些属性而不更改原本的位置，则单独抽取出那个属性作为数组，再重新赋值
+	 * @param {Object} arr 需要排列的数组
+	 * @param {Object} turn 第一个排到最后面 OR  最后面排到最前面 默认向后排队(false)
+	 */
+	function arrayQueue(arr,turn)
+	{
+		
+		turn&&arr.unshift(arr.pop())||arr.push(arr.shift());
+		return arr;
+	}
+	
+	console.log(queue(arr,true));
+</script>-->
 	</body>
 
 </html>

@@ -68,11 +68,10 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var $=__webpack_require__(1);
-//console.log($.tools.getRandom(5));
-var arr={a:'1',b:9,f:4};
-var arr1={a:'18',b:'c',f:4};
 
-console.log($.tools.findString("chensiyuan","isy"));
+console.log($('<input value="441322199408061738"/>').RegId());
+console.log($.tools.arrayQueue([1,2,3,4]));
+//console.log($.tools.findString("chensiyuan","isy"));
 //$.tools.findIndex(arr,2);
 
 
@@ -210,6 +209,21 @@ $.fn.extend({
 		});
 		return res;
 	},
+	RegId:function(){
+		
+	var res = true;
+		$.each($(this), function() {
+			
+			if(!/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test($(this).val())) {
+				//return false;
+				res = false;
+			}
+		});
+		return res;	
+		
+		
+	},
+	
 	/**
 	 * 是否有空值
 	 */
@@ -274,6 +288,17 @@ $.extend({
 				alert('URL，回调函数不能为空');
 
 		},
+		/**
+	 * 数组队列,用于一组循环排列的数据 [1,2,3,4]=》[2,3，4,1] //如果是 JSON数组，需要排序某些属性而不更改原本的位置，则单独抽取出那个属性作为数组，再重新赋值
+	 * @param {Object} arr 需要排列的数组
+	 * @param {Object} turn 第一个排到最后面 OR  最后面排到最前面 默认向后排队(false)
+	 */
+	 arrayQueue:function(arr,turn)
+	{
+		
+		turn&&arr.unshift(arr.pop())||arr.push(arr.shift());
+		return arr;
+	},
 
 		/**
 		 * @param {Object} num 想要返回的位数
