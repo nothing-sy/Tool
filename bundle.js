@@ -68,21 +68,13 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var $=__webpack_require__(1);
-var arrAll=	[{name:'a',age:1},{name:'b',age:2},{name:'c',age:3},{name:'d',age:4}];
-var arr=[1,2,3,4];
-var newarr=$.tools.arrayQueue(arr);
-//var newJSON=$.tools.jsonAssignment(arrAll,newarr);
-console.log(JSON.stringify(arr));
-//console.log(JSON.stringify(newJSON));
+/*var arrAll=	[{name:'a',age:1,l:5},{name:'b',age:2,l:5},{name:'c',age:3,l:5},{name:'d',age:4,l:5},{name:'c',age:3,l:5}];
+var arr=[1,2,3,4,1];
+console.log($.tools.findIndex(arr,'1'));
+console.log($.tools.findIndex(arrAll,'3','age'));
+*/
 
-
-//提取JSON数据中某个属性的值作为新的数组
-
-var arrAll=$.tools.arrayInputJson(arrAll,arr,'age');
-console.log(JSON.stringify(arrAll));
-
-console.log(JSON.stringify($.tools.extractArrayFromJson(arrAll,'name')));
-
+console.log(JSON.stringify($({a:1}).dataTojson({b:2})))
 
 /***/ }),
 /* 1 */
@@ -175,15 +167,13 @@ $.fn.extend({
 
 	/**
 	 * 指定当前选中元素所具有的动作，并设置当前元素与下一个元素的关系
-	 * @param {Object} Func  匿名函数，用于设置当前元素的动作和下一个元素的动作联系，$(t)为当前元素，list为选中的元素列表，
-	 * 所以要控制元素列表中当前元素的下一个元素，只需要$(list[i+1]).focus()即可
+	 * @param {Object} Func  匿名函数，用于设置当前元素的动作和下一个元素的动作联系，$(t)选中的所有元素，
+	 * 所以要控制元素列表中当前元素的下一个元素，只需要$(t[i+1]).focus()即可
 	 */
 	nextElement: function(Func) {
-		var list = [];
-		$(this).each(function(i) {
-			list.push(this);
-			Func(this, list, i);
-
+		var t=$(this);
+		$(this).each(function(i) {			
+			Func(t,i);					
 		});
 
 	},
@@ -520,28 +510,41 @@ $.extend({
 		 * @param {Object} p 属性名
 		 */
 		arrayInputJson: function(j, a, p) {
-		return j.length >= a.length && (function() {
-					for(i in j) {
-						j[i][p] = a[i];
-					}
-				}(), j) || false;
+			return j.length >= a.length && (function() {
+				for(i in j) {
+					j[i][p] = a[i];
+				}
+			}(), j) || false;
 
 		},
-		
+
 		/**
 		 *  从JSON中抽取某一属性并返回该属性数组
 		 * @param {Object} j JSON数据
 		 * @param {Object} p 需要抽取的key
 		 */
-		extractArrayFromJson:function(j,p){
-			var arr=[];
-			for(i in j)
-			{
-				arr.push(j[i][p]);
-			}
-			
-			return arr;
-			
+		extractArrayFromJson: function(j, p) {
+			var arr = [],
+				jsons = {},
+				args = arguments;
+			return arguments.length > 2 && ((function() {
+
+				for(i in j) {
+
+					for(i = 1; i < args.length; i++) {
+
+						jsons[args[i]] = j[i][args[i]];
+
+					}
+					arr.push(jsons);
+				}
+
+			})(), arr) || ((function() {
+				for(i in j) {
+					arr.push(j[i][p]);
+				}
+			})(), arr)
+
 		},
 
 		/**
@@ -564,14 +567,20 @@ $.extend({
 		/**
 		 * 寻找索引
 		 * @param {Object} obj 寻找目标对象
-		 * @param {Object} val 寻找的值
+		 * @param {String} val 寻找的值
+		 * @param {String} condition JSON数组中寻找的属性
+		 * ....
 		 * 返回值所对应的下角标
 		 */
-		findIndex: function(obj, val) {
+		findIndex: function(obj, val,condition) {
 
-			var index = [];
-			$.each(obj, function(key, value) {
+			var index = [],args=arguments;
+			!condition&&$.each(obj, function(key, value) {
+				console.log(value+'-'+val);
 				value == val && index.push(key);
+			})||$.each(obj, function(key,value) {		
+			
+				value[condition]==val&&index.push(key);		
 			});
 
 			return index.length > 0 && (index.length == 1 && index[0] || index) || null;

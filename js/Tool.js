@@ -85,15 +85,13 @@ $.fn.extend({
 
 	/**
 	 * 指定当前选中元素所具有的动作，并设置当前元素与下一个元素的关系
-	 * @param {Object} Func  匿名函数，用于设置当前元素的动作和下一个元素的动作联系，$(t)为当前元素，list为选中的元素列表，
-	 * 所以要控制元素列表中当前元素的下一个元素，只需要$(list[i+1]).focus()即可
+	 * @param {Object} Func  匿名函数，用于设置当前元素的动作和下一个元素的动作联系，$(t)选中的所有元素，
+	 * 所以要控制元素列表中当前元素的下一个元素，只需要$(t[i+1]).focus()即可
 	 */
 	nextElement: function(Func) {
-		var list = [];
-		$(this).each(function(i) {
-			list.push(this);
-			Func(this, list, i);
-
+		var t=$(this);
+		$(this).each(function(i) {			
+			Func(t,i);					
 		});
 
 	},
@@ -430,28 +428,41 @@ $.extend({
 		 * @param {Object} p 属性名
 		 */
 		arrayInputJson: function(j, a, p) {
-		return j.length >= a.length && (function() {
-					for(i in j) {
-						j[i][p] = a[i];
-					}
-				}(), j) || false;
+			return j.length == a.length && (function() {
+				for(i in j) {
+					j[i][p] = a[i];
+				}
+			}(), j) || false;
 
 		},
-		
+
 		/**
 		 *  从JSON中抽取某一属性并返回该属性数组
 		 * @param {Object} j JSON数据
 		 * @param {Object} p 需要抽取的key
 		 */
-		extractArrayFromJson:function(j,p){
-			var arr=[];
-			for(i in j)
-			{
-				arr.push(j[i][p]);
-			}
-			
-			return arr;
-			
+		extractArrayFromJson: function(j, p) {
+			var arr = [],
+				jsons = {},
+				args = arguments;
+			return arguments.length > 2 && ((function() {
+
+				for(i in j) {
+
+					for(i = 1; i < args.length; i++) {
+
+						jsons[args[i]] = j[i][args[i]];
+
+					}
+					arr.push(jsons);
+				}
+
+			})(), arr) || ((function() {
+				for(i in j) {
+					arr.push(j[i][p]);
+				}
+			})(), arr)
+
 		},
 
 		/**
@@ -474,14 +485,20 @@ $.extend({
 		/**
 		 * 寻找索引
 		 * @param {Object} obj 寻找目标对象
-		 * @param {Object} val 寻找的值
+		 * @param {String} val 寻找的值
+		 * @param {String} condition JSON数组中寻找的属性
+		 * ....
 		 * 返回值所对应的下角标
 		 */
-		findIndex: function(obj, val) {
+		findIndex: function(obj, val,condition) {
 
-			var index = [];
-			$.each(obj, function(key, value) {
+			var index = [],args=arguments;
+			!condition&&$.each(obj, function(key, value) {
+				console.log(value+'-'+val);
 				value == val && index.push(key);
+			})||$.each(obj, function(key,value) {		
+			
+				value[condition]==val&&index.push(key);		
 			});
 
 			return index.length > 0 && (index.length == 1 && index[0] || index) || null;
