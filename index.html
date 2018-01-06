@@ -14,15 +14,12 @@
 	
 	<input type="text" name="b" id="b"  class="a" value="b" />
 	<body>
-		<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
-		<!--<script src="bundle.js" type="text/javascript" charset="utf-8"></script>-->
+		<!--<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="bundle.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var a=[{a:1,c:3},{a:2,c:6}];
-			var b=[{a:2},{a:4}];
-			var t=$.extend(true,a,b);
-			console.log(JSON.stringify(t));
-			console.log(JSON.stringify(a));
-			console.log(JSON.stringify(b));
+			var arr=[{"name":1,"age":18}];
+			arr.push({"name":22,"age":22})
+			console.log(JSON.stringify(arr));
 		</script>
 		<!--<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>-->
 		

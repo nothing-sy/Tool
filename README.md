@@ -8,6 +8,7 @@
    - **arrayInputJson更名为arrayInputJsonArray**
    - **修改nextElement函数问题,用法有修改，请参考函数说明**
    - **规范文档用语： 数组，JSON，JSON数组对应函数名中的  array,  json  jsonArray=》[1,2,3] ,{a:1,b:2},  [{a:1},{b:2}]**
+   - **修复extractArrayFromJsonArray获取属性一直获取的是最后一个匹配值的问题**
 ### 用法
 
 ```

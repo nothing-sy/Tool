@@ -74,7 +74,8 @@ console.log($.tools.findIndex(arr,'1'));
 console.log($.tools.findIndex(arrAll,'3','age'));
 */
 
-console.log(JSON.stringify($({a:1}).dataTojson({b:2})))
+console.log(JSON.stringify($.tools.extractArrayFromJsonArray([{name:1,age:18,l:9},{name:2,age:25,l:8}],'name','age')));
+
 
 /***/ }),
 /* 1 */
@@ -509,8 +510,8 @@ $.extend({
 		 * @param {Object} a 数组
 		 * @param {Object} p 属性名
 		 */
-		arrayInputJson: function(j, a, p) {
-			return j.length >= a.length && (function() {
+		arrayInputJsonArray: function(j, a, p) {
+			return j.length == a.length && (function() {
 				for(i in j) {
 					j[i][p] = a[i];
 				}
@@ -523,20 +524,21 @@ $.extend({
 		 * @param {Object} j JSON数据
 		 * @param {Object} p 需要抽取的key
 		 */
-		extractArrayFromJson: function(j, p) {
+		extractArrayFromJsonArray: function(j, p) {
 			var arr = [],
-				jsons = {},
 				args = arguments;
 			return arguments.length > 2 && ((function() {
 
-				for(i in j) {
-
+				for(x in j) {
+					var jsons = {};
 					for(i = 1; i < args.length; i++) {
 
-						jsons[args[i]] = j[i][args[i]];
+						jsons[args[i]] = j[x][args[i]];
 
 					}
+					console.log(JSON.stringify(jsons));
 					arr.push(jsons);
+					console.log(JSON.stringify(arr));
 				}
 
 			})(), arr) || ((function() {

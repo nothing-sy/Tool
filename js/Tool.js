@@ -443,15 +443,14 @@ $.extend({
 		 */
 		extractArrayFromJsonArray: function(j, p) {
 			var arr = [],
-				jsons = {},
 				args = arguments;
 			return arguments.length > 2 && ((function() {
 
-				for(i in j) {
-
+				for(x in j) {
+					var jsons = {};//对象引用的是地址，如果不重新新建的话会被修改数据
 					for(i = 1; i < args.length; i++) {
 
-						jsons[args[i]] = j[i][args[i]];
+						jsons[args[i]] = j[x][args[i]];
 
 					}
 					arr.push(jsons);
