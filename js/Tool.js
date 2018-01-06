@@ -427,7 +427,7 @@ $.extend({
 		 * @param {Object} a 数组
 		 * @param {Object} p 属性名
 		 */
-		arrayInputJson: function(j, a, p) {
+		arrayInputJsonArray: function(j, a, p) {
 			return j.length == a.length && (function() {
 				for(i in j) {
 					j[i][p] = a[i];
@@ -441,7 +441,7 @@ $.extend({
 		 * @param {Object} j JSON数据
 		 * @param {Object} p 需要抽取的key
 		 */
-		extractArrayFromJson: function(j, p) {
+		extractArrayFromJsonArray: function(j, p) {
 			var arr = [],
 				jsons = {},
 				args = arguments;
