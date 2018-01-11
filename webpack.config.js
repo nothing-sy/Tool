@@ -1,7 +1,7 @@
 module.exports = {
-entry: "./js/new.js",
-output:{
-filename:'bundle.js'
-}
-
+		entry: "./js/new.js",
+		output: {
+			filename: 'bundle.js'
+		}
+		
 }

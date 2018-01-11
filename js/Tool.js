@@ -1,4 +1,5 @@
 var $ = require("jquery");
+//require('sweetalert');
 $.fn.extend({
 	/**
 	 * @param {Object} join 遇到相同的参数是否合并，合并用逗号隔开

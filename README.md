@@ -9,10 +9,14 @@
    - **修改nextElement函数问题,用法有修改，请参考函数说明**
    - **规范文档用语： 数组，JSON，JSON数组对应函数名中的  array,  json  jsonArray=》[1,2,3] ,{a:1,b:2},  [{a:1},{b:2}]**
    - **修复extractArrayFromJsonArray获取属性一直获取的是最后一个匹配值的问题**
+   
+*2018-01-11*
+- **提供sweealert弹窗必须文件，可以安装npm install sweetalert 并在代码中引用即可**
 ### 用法
 
 ```
-script标签导入，将Tools.js文件中 第一行代码var $=require('jquery');以及最后一行代码module.export=$;去掉之后，在文件中引入下面两行代码
+script标签导入
+
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/Tool.js"></script>
 
@@ -23,6 +27,15 @@ npm install --save-dev jqtools
 
 var $=require('jqtools');//$仍然是JQ对象，此时的JQ对象已经做了扩展操作，函数使用方法如下。
 最后使用webpack打包生成即可。
+
+
+如果需要使用弹窗插件，请安装sweetalert
+
+npm install --save-dev sweetalert
+require('sweetalert');
+
+安装包中已经存在sweetalert必要的样式文件，只需要引入便可直接使用。
+使用方法请参考 sweetalert的官网，用法一致
 
 ```
 

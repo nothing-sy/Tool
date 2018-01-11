@@ -4,23 +4,64 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
+		<!--<link rel="stylesheet" type="text/css" href="css/UI.css"/>-->
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+				
+			}
+		
+		#left
+		{
+			background: greenyellow;
+
+			height: 5px;
+			-webkit-transform: rotate(45deg);
+			position: absolute;
+			-webkit-animation:widthL 0.3s forwards;
+			/*animation-fill-mode：forwards；*/
+			
+		}
+		#right
+		{
+			background: greenyellow;
+			
+			height: 5px;
+			-webkit-transform: rotate(-45deg);
+			position: absolute;
+			-webkit-animation:widthR 0.3s 0.3s forwards ;
+			/*animation-fill-mode：forwards；*/
+		}
+		@-webkit-keyframes widthL{
+			0%{width: 0;top:0;left:0}
+		
+			100%{width: 50px;top: 50px;left: 25px;}
+		}
+		@-webkit-keyframes widthR{
+			from{width: 0px;left:65px;top: 65px;}
+			to{width: 80px;left:55px;top: 40px;}
+		}
+		
+		
+		
+			
+		</style>
 	</head>
 
 	<body>
+		
+		<div id="left">
+			
+		</div>
+		<div id="right">
+			
+		</div>
+		<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			function arrayInputJson(j, a, p) {
-				return j.length >= a.length && (function() {
-					for(i in j) {
-						j[i][p] = a[i];
-					}
-				}(), j) || false;
+			
+			
 
-			}
-			console.log(JSON.stringify(arrayInputJson([{
-						a: 1
-				}, {
-						a: 2
-					}], [2, 1], 'a')));
 		</script>
 	</body>
 
