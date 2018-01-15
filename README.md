@@ -12,6 +12,10 @@
    
 *2018-01-11*
 - **提供sweealert弹窗必须文件，可以安装npm install sweetalert 并在代码中引用即可**
+
+*2018-01-15*
+- **新增findIndexWithCallback，通过回调函数查找索引，支持数组和JSON数组**
+
 ### 用法
 
 ```
@@ -426,4 +430,22 @@ $.tools.extractArrayFromJson(arrAll,'name','age');//[{name:'a',age:1},{name:'b',
 var arrAll=	[{name:'a',age:1},{name:'b',age:2},{name:'c',age:3},{name:'d',age:4}];
 var arr=[4,5,6,7];
 $.tools.arrayInputJson(arrAll,arr,'age');//[{name:'a',age:4},{name:'b',age:5},{name:'c',age:6},{name:'d',age:7}]
+```
+
+## 查找数组或JSON数组索引 - ***findIndexWithCallback***
+**findIndexWithCallback(obj,callback[curVal,index]);**
+- obj 索引对象
+- callback 条件回调函数, curVal 为当前的元素， index当前元素索引 ,this 为索引结果集（数组）
+```javascript
+
+var t=$.tools.findIndexWithCallback([{a:1},{a:2}],function(curVal,index){
+				curVal.a>1&&this.push(index);			
+			});
+			
+var t1=$.tools.findIndexWithCallback([1,2,3,4,5,6],function(curVal,index){
+				curVal>3&&this.push(index);			
+			});
+
+//t=> [1]
+//t1 => [3,4,5]
 ```

@@ -483,7 +483,8 @@ $.extend({
 		},
 
 		/**
-		 * 寻找索引
+		 * 
+		 * 寻找索引，支持数组和JSON数组
 		 * @param {Object} obj 寻找目标对象
 		 * @param {String} val 寻找的值
 		 * @param {String} condition JSON数组中寻找的属性
@@ -494,7 +495,6 @@ $.extend({
 
 			var index = [],args=arguments;
 			!condition&&$.each(obj, function(key, value) {
-				console.log(value+'-'+val);
 				value == val && index.push(key);
 			})||$.each(obj, function(key,value) {		
 			
@@ -506,6 +506,17 @@ $.extend({
 		findString: function(Str, val) {
 			return Str.indexOf(val) > -1 && true || false;
 
+		},
+		
+		/**
+		 * 自定义回调函数,通过条件 查找数组或者JSON数组索引
+		 * @param {Object} obj
+		 * @param {Object} callback[curVal,index] curVal当前元素，index为当前元素的索引，this为结果集数组
+		 */
+		findIndexWithCallback:function(obj,callback){
+		var res=[];
+		obj.filter(callback,res);
+		return res;
 		}
 	}
 })
