@@ -385,7 +385,7 @@ $.tools.findString("siyuan","sy");//true
 
 
 ## 数据队列- ***arrayQueue***
-**queue(arr,turn)**
+**arrayQueue(arr,turn)**
 - arr 循环排列的数组
 - turn 循环排列的方向，默认false 向后排（第一到最后），true向前排(最后到第一)
 ```javascript
@@ -397,8 +397,8 @@ $.tools.findString("siyuan","sy");//true
 	 * @param {Object} turn 第一个排到最后面 OR  最后面排到最前面 默认向后排队(false)
 	 */
 	var arr=[1,2,3,4];
-	$.tools.queue(arr,true);//[4,1,2,3]
-	$.tools.queue(arr);//默认值为false，向后排 [2,3,4,1]
+	$.tools.arrayQueue(arr,true);//[4,1,2,3]
+	$.tools.arrayQueue(arr);//默认值为false，向后排 [2,3,4,1]
 
 ```
 
