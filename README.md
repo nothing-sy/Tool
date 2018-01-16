@@ -16,6 +16,8 @@
 *2018-01-15*
 - **新增findIndexWithCallback，通过回调函数查找索引，支持数组和JSON数组**
 
+*2018-01-16*
+- **新增jsonStringJoin，拼接JSON数据**
 ### 用法
 
 ```
@@ -448,4 +450,14 @@ var t1=$.tools.findIndexWithCallback([1,2,3,4,5,6],function(curVal,index){
 
 //t=> [1]
 //t1 => [3,4,5]
+```
+
+## 拼接JSON数据 字符串
+**jsonStringJoin(obj,arr,sep)** 
+- obj JSON对象
+- arr 数组  需要拼接的属性名 
+- sep 分隔符
+```javascript
+var t={name:'siyuan',addr:'China-sichuan',phone:'13xxxxx',age:'18'};
+$.tools.jsonStringJoin(t,['name','age','phone','addr'],'@');//siyuan@18@13xxxxx@China-sichuan
 ```

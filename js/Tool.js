@@ -90,9 +90,9 @@ $.fn.extend({
 	 * 所以要控制元素列表中当前元素的下一个元素，只需要$(t[i+1]).focus()即可
 	 */
 	nextElement: function(Func) {
-		var t=$(this);
-		$(this).each(function(i) {			
-			Func(t,i);					
+		var t = $(this);
+		$(this).each(function(i) {
+			Func(t, i);
 		});
 
 	},
@@ -448,7 +448,7 @@ $.extend({
 			return arguments.length > 2 && ((function() {
 
 				for(x in j) {
-					var jsons = {};//对象引用的是地址，如果不重新新建的话会被修改数据
+					var jsons = {}; //对象引用的是地址，如果不重新新建的话会被修改数据
 					for(i = 1; i < args.length; i++) {
 
 						jsons[args[i]] = j[x][args[i]];
@@ -491,14 +491,15 @@ $.extend({
 		 * ....
 		 * 返回值所对应的下角标
 		 */
-		findIndex: function(obj, val,condition) {
+		findIndex: function(obj, val, condition) {
 
-			var index = [],args=arguments;
-			!condition&&$.each(obj, function(key, value) {
+			var index = [],
+				args = arguments;
+			!condition && $.each(obj, function(key, value) {
 				value == val && index.push(key);
-			})||$.each(obj, function(key,value) {		
-			
-				value[condition]==val&&index.push(key);		
+			}) || $.each(obj, function(key, value) {
+
+				value[condition] == val && index.push(key);
 			});
 
 			return index.length > 0 && (index.length == 1 && index[0] || index) || null;
@@ -507,16 +508,34 @@ $.extend({
 			return Str.indexOf(val) > -1 && true || false;
 
 		},
-		
+
 		/**
 		 * 自定义回调函数,通过条件 查找数组或者JSON数组索引
 		 * @param {Object} obj
 		 * @param {Object} callback[curVal,index] curVal当前元素，index为当前元素的索引，this为结果集数组
 		 */
-		findIndexWithCallback:function(obj,callback){
-		var res=[];
-		obj.filter(callback,res);
-		return res;
+		findIndexWithCallback: function(obj, callback) {
+			var res = [];
+			obj.filter(callback, res);
+			return res;
+		},
+
+		/**
+		 * json数据拼接
+		 * @param {Object} obj
+		 * @param {Object} arr
+		 * @param {Object} sep
+		 */
+		jsonStringJoin: function(obj, arr, sep) {
+			var res = '';
+			for(i in arr) {
+				
+			
+				(i != arr.length - 1) && (res += eval('obj.' + arr[i] )+ sep)||(res+=eval('obj.'+arr[i]));
+
+			}
+			return res;
+
 		}
 	}
 })
