@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="barcode" width="500" height="150" style="background: white;"></canvas>
+
+		<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var canvas = $('#barcode')[0];
+			var ctx = canvas.getContext('2d');
+			var num = 0,
+				width = 2; //统计已经画了多少个条形模块，记录位置
+			//ctx.fillRect(0,0,100,100);
+
+			// 设定 基本条形模块的宽高和 颜色
+			var basBarWhite = {
+				color: 'white',
+				height: 100
+			};
+			var basBarBlack = {
+				color: 'black',
+				height: 100
+			};
+			var basBarSplitBlack = {
+				color: 'black',
+				height: 110
+			};
+			var basBarSplitWhite = {
+				color: 'white',
+				height: 110
+			};
+
+			//前置码 1  A类 ：
+			var codeA = ['0001101', '0011001', '0010011', '0111101', '0100011', '0110001', '0101111', '0111011', '0110111', '0001011'];
+			var codeB = ['0100111', '0110011', '0011011', '0100001', '0011101', '0111001', '0000101', '0010001', '0001001', '0010111'];
+			//右侧数据
+			var rightCode = ['1110010', '1100110', '1101100', '1000010', '1011100', '1001110', '1010000', '1000100', '1001000', '1110100']; //
+			//左侧空白区
+			for(i = 0; i < 12; i++) {
+				draw('basBarWhite');
+				num++;
+			}
+			//起始符号 101
+			draw('basBarSplitBlack');
+			draw('basBarSplitWhite');
+			draw('basBarSplitBlack');
+
+			//
+			var barcode = '182052548445';
+			//左侧数据符,除了前置码之外有六位
+			var leftData = barcode.substr(1, 6);
+
+			var rightData = barcode.substr(7);
+			console.log(leftData + '/' + rightData);
+
+			for(i in leftData) {
+				drawNumber(leftData[i], 'left');
+
+			}
+			//   中间分隔符 01010
+
+			draw('basBarSplitWhite');
+			draw('basBarSplitBlack');
+			draw('basBarSplitWhite');
+			draw('basBarSplitBlack');
+			draw('basBarSplitWhite');
+
+			for(i in rightData) {
+				drawNumber(rightData[i], 'right');
+
+			}
+
+			//校验符号
+			var Cn = checkNumber(barcode);
+			//console.log(Cn+'校验符号');
+			drawNumber(Cn, 'right');
+
+			//终止符
+			draw('basBarSplitBlack');
+			draw('basBarSplitWhite');
+			draw('basBarSplitBlack');
+
+			//右侧空白符号
+			for(i = 0; i < 9; i++) {
+				draw('basBarWhite');
+
+			}
+
+			function drawNumber(num, type) {
+				var code = type.toLowerCase() == 'left' ? codeA[num] : rightCode[num];
+				console.log(code);
+
+				for(i in code) {
+					code[i] == '1' && (draw('basBarBlack'), true) || draw('basBarWhite');
+
+				}
+
+			}
+			//校验码    参数，12位数
+			function checkNumber(str) {
+				var c1 = 0,
+					c2 = 0,
+					cc = 0,
+					c = 0;
+
+				for(i in str) {
+					i % 2 == 0 && (c1 += parseInt(str[i])) || (c2 += parseInt(str[i]));
+
+				}
+				c2 *= 3;
+				cc = (c1 + c2).toString();
+				cc = cc.substr(cc.length - 1);
+				(10 - cc) == 10 && (c = 0) || (c = 10 - cc);
+				num++;
+				return c;
+			}
+
+			function draw(type) {
+				ctx.beginPath();
+				ctx.fillStyle = eval(type + '.color');
+				ctx.fillRect(num * width, 0, width, eval(type + '.height'));
+				ctx.closePath();
+				num++;
+			}
+		</script>
+
+	</body>
+
+</html>

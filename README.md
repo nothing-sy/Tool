@@ -1,23 +1,9 @@
 # Tool
 基于Jquery.js日常应用到的工具,主要用于DOM操作和数据处理，如表单数据转化成JSON，设置初始日期，正则验证，JSON数组转换，JSON数组分类等
 
-## 更新日志
-*2018-01-06* 
-   - **修改extractArrayFromJson函数更名为extractArrayFromJsonArray，允许从json数组中提取一个或多个属性值并返回数组对象**
-   - **修改findIndex函数，允许查找json数组**
-   - **arrayInputJson更名为arrayInputJsonArray**
-   - **修改nextElement函数问题,用法有修改，请参考函数说明**
-   - **规范文档用语： 数组，JSON，JSON数组对应函数名中的  array,  json  jsonArray=》[1,2,3] ,{a:1,b:2},  [{a:1},{b:2}]**
-   - **修复extractArrayFromJsonArray获取属性一直获取的是最后一个匹配值的问题**
-   
-*2018-01-11*
-- **提供sweealert弹窗必须文件，可以安装npm install sweetalert 并在代码中引用即可**
+## <a href='#log'>更新日志</a>
 
-*2018-01-15*
-- **新增findIndexWithCallback，通过回调函数查找索引，支持数组和JSON数组**
 
-*2018-01-16*
-- **新增jsonStringJoin，拼接JSON数据**
 ### 用法
 
 ```
@@ -461,3 +447,30 @@ var t1=$.tools.findIndexWithCallback([1,2,3,4,5,6],function(curVal,index){
 var t={name:'siyuan',addr:'China-sichuan',phone:'13xxxxx',age:'18'};
 $.tools.jsonStringJoin(t,['name','age','phone','addr'],'@');//siyuan@18@13xxxxx@China-sichuan
 ```
+
+
+
+
+
+<t id='log'>
+## 更新日志
+
+*2018-01-06* 
+   - **修改extractArrayFromJson函数更名为extractArrayFromJsonArray，允许从json数组中提取一个或多个属性值并返回数组对象**
+   - **修改findIndex函数，允许查找json数组**
+   - **arrayInputJson更名为arrayInputJsonArray**
+   - **修改nextElement函数问题,用法有修改，请参考函数说明**
+   - **规范文档用语： 数组，JSON，JSON数组对应函数名中的  array,  json  jsonArray=》[1,2,3] ,{a:1,b:2},  [{a:1},{b:2}]**
+   - **修复extractArrayFromJsonArray获取属性一直获取的是最后一个匹配值的问题**
+   
+*2018-01-11*
+- **提供sweealert弹窗必须文件，可以安装npm install sweetalert 并在代码中引用即可**
+
+*2018-01-15*
+- **新增findIndexWithCallback，通过回调函数查找索引，支持数组和JSON数组**
+
+*2018-01-16*
+- **新增jsonStringJoin，拼接JSON数据**
+
+
+</t>
