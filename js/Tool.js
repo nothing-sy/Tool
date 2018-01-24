@@ -548,10 +548,11 @@ $.extend({
 		  */
 		 banner :function(id, width, speed) {
 				var list = [];
-				for(i = 0; i < $('#' + id + ' img').length; i++) {
+				var imgs=$('#' + id + ' img');
+				for(i = 0; i < $(imgs).length; i++) {
 					list.push(i * width);
 				}
-				$('#' + id + ' img').each(function(i) {
+				$(imgs).each(function(i) {
 
 					$(this).css({
 						'left': list[i] + 'px'
@@ -561,8 +562,8 @@ $.extend({
 
 				setInterval(function() {
 
-					if($($('#' + id + ' img')[$('#' + id + ' img').length - 1]).css('left') != '0px') {
-						$('#' + id + ' img').each(function(i) {
+					if($(imgs[$(imgs).length - 1]).css('left') != '0px') {
+						$(imgs).each(function(i) {
 
 							$(this).animate({
 								'left': parseInt($(this).css('left').replace(/px/, '')) - width + 'px'
@@ -571,7 +572,7 @@ $.extend({
 						});
 
 					} else {
-						$('#' + id + ' img').each(function(i) {
+						$(imgs).each(function(i) {
 							$(this).animate({
 								'left': list[i] + 'px'
 							});
