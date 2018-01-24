@@ -2,7 +2,6 @@
 基于Jquery.js日常应用到的工具,主要用于DOM操作和数据处理，如表单数据转化成JSON，设置初始日期，正则验证，JSON数组转换，JSON数组分类等
 
 
-
 ### 用法
 
 ```
@@ -447,12 +446,45 @@ var t={name:'siyuan',addr:'China-sichuan',phone:'13xxxxx',age:'18'};
 $.tools.jsonStringJoin(t,['name','age','phone','addr'],'@');//siyuan@18@13xxxxx@China-sichuan
 ```
 
+## 轮播图片
+**banner(id,width,speed)**
+- id 轮播组件的id
+- width 轮播图片的宽度
+- speed 轮播的速度
+```html
+<style type="text/css">
+			#header
+			{
+				position: relative;
+				width: 600px;
+				height: 200px;
+				overflow: hidden;
+			}
+			#header img
+			{
+				position: absolute;
+				
+			}
+		</style>
+		<div id="header">
+			<img src="img/2.png" />
+			<img src="img/3.png" />
+			<img src="img/4.png" />
+			<img src="img/404.jpg" />
+			<img src="img/bg.jpg" />			
+		</div>
+
+<script>
+$.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为播放速度
+
+</script>
+
+```
 
 
 
 
-<t id='log'>
-##  更新日志
+## 更新日志
 
 *2018-01-06* 
    - **修改extractArrayFromJson函数更名为extractArrayFromJsonArray，允许从json数组中提取一个或多个属性值并返回数组对象**
@@ -471,5 +503,5 @@ $.tools.jsonStringJoin(t,['name','age','phone','addr'],'@');//siyuan@18@13xxxxx@
 *2018-01-16*
 - **新增jsonStringJoin，拼接JSON数据**
 
-
-</t>
+*2018-01-24*
+- **新增ui命名空间，$.ui,新增轮播图片$.ui.banner(id,width,speed)**

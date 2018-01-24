@@ -69,18 +69,7 @@
 
 var $=__webpack_require__(1);
 
-/*var t=$.tools.findIndexWithCallback([{a:1},{a:2}],function(curVal,index){
-				curVal.a>1&&this.push(index);			
-			});
-			
-var t1=$.tools.findIndexWithCallback([1,2,3,4,5,6],function(curVal,index){
-				curVal>3&&this.push(index);			
-			});
-console.log(JSON.stringify(t));
-console.log(JSON.stringify(t1));*/
-
-var t={name:'siyuan',addr:'China-sichuan',phone:'13xxxxx',age:'18'};
-console.log($.tools.jsonStringJoin(t,['name','age','phone','addr'],'@'));
+$.ui.banner('header',600,3000);
 
 
 
@@ -627,6 +616,54 @@ $.extend({
 			return res;
 
 		}
+	},
+	ui:{
+		 /**
+		  * 轮播图片，
+		  * <div id='x'><img/></img></div>  div 和img的position分别为relative和absolute
+		  * @param {Object} id 轮播组件的id
+		  * @param {Object} width 图片的宽度
+		  * @param {Object} speed 轮播速度 单位毫秒
+		  */
+		 banner :function(id, width, speed) {
+				var list = [];
+				for(i = 0; i < $('#' + id + ' img').length; i++) {
+					list.push(i * width);
+				}
+				$('#' + id + ' img').each(function(i) {
+
+					$(this).css({
+						'left': list[i] + 'px'
+					});
+
+				});
+
+				setInterval(function() {
+
+					if($($('#' + id + ' img')[$('#' + id + ' img').length - 1]).css('left') != '0px') {
+						$('#' + id + ' img').each(function(i) {
+
+							$(this).animate({
+								'left': parseInt($(this).css('left').replace(/px/, '')) - width + 'px'
+							});
+
+						});
+
+					} else {
+						$('#' + id + ' img').each(function(i) {
+							$(this).animate({
+								'left': list[i] + 'px'
+							});
+
+						});
+
+					}
+
+				}, speed);
+
+			}
+		
+		
 	}
 })
 
