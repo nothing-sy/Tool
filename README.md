@@ -1,7 +1,6 @@
 # Tool
 基于Jquery.js日常应用到的工具,主要用于DOM操作和数据处理，如表单数据转化成JSON，设置初始日期，正则验证，JSON数组转换，JSON数组分类等
 
-## <a href='#log'>更新日志</a>
 
 
 ### 用法
@@ -453,7 +452,7 @@ $.tools.jsonStringJoin(t,['name','age','phone','addr'],'@');//siyuan@18@13xxxxx@
 
 
 <t id='log'>
-## 更新日志
+##  更新日志
 
 *2018-01-06* 
    - **修改extractArrayFromJson函数更名为extractArrayFromJsonArray，允许从json数组中提取一个或多个属性值并返回数组对象**
