@@ -69,8 +69,8 @@
 
 var $=__webpack_require__(1);
 
-$.ui.banner('header',600,3000);
-
+console.log(JSON.stringify($('#c,#d,form').formTojson({w:8})));
+//console.log(JSON.stringify($('#c,#d').formTojson({t:12})));
 
 
 /***/ }),
@@ -81,12 +81,13 @@ var $ = __webpack_require__(2);
 //require('sweetalert');
 $.fn.extend({
 	/**
+	 * 可选取的元素包括form或者自选元素比如:$('form')  和 $('#a,#b')
 	 * @param {Object} join 遇到相同的参数是否合并，合并用逗号隔开
-	 * @param {Object} newObj 表单外的参数
+	 * @param {Object} newObj 传入控件以外的的JSON数据参数
 	 */
 	formTojson: function(newObj, join) {
-		var obj = {};
-		newObj = arguments[0] ? arguments[0] : {};
+		var obj = {},arr;
+		newObj = arguments[0]||{};
 		//join=arguments[1]?arguments[1]:false;//默认替换而不是用逗号隔开
 		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
 		$.each($(this).serializeArray(), function(i, _obj) {
@@ -112,7 +113,7 @@ $.fn.extend({
 	 * @param {Object} join
 	 * @param {Object} newObj
 	 */
-	dataTojson: function(newObj, join) {
+	/*dataTojson: function(newObj, join) {
 		var obj = {};
 
 		newObj = arguments[0] ? arguments[0] : {};
@@ -136,7 +137,7 @@ $.fn.extend({
 
 		});
 		return obj;
-	},
+	},*/
 	/**
 	 * 通过ID设置 日期控件 为当天
 	 */
@@ -608,63 +609,61 @@ $.extend({
 		jsonStringJoin: function(obj, arr, sep) {
 			var res = '';
 			for(i in arr) {
-				
-			
-				(i != arr.length - 1) && (res += eval('obj.' + arr[i] )+ sep)||(res+=eval('obj.'+arr[i]));
+
+				(i != arr.length - 1) && (res += eval('obj.' + arr[i]) + sep) || (res += eval('obj.' + arr[i]));
 
 			}
 			return res;
 
 		}
 	},
-	ui:{
-		 /**
-		  * 轮播图片，
-		  * <div id='x'><img/></img></div>  div 和img的position分别为relative和absolute
-		  * @param {Object} id 轮播组件的id
-		  * @param {Object} width 图片的宽度
-		  * @param {Object} speed 轮播速度 单位毫秒
-		  */
-		 banner :function(id, width, speed) {
-				var list = [];
-				var imgs=$('#' + id + ' img');
-				for(i = 0; i < $(imgs).length; i++) {
-					list.push(i * width);
-				}
-				$(imgs).each(function(i) {
+	ui: {
+		/**
+		 * 轮播图片，
+		 * <div id='x'><img/></img></div>  div 和img的position分别为relative和absolute
+		 * @param {Object} id 轮播组件的id
+		 * @param {Object} width 图片的宽度
+		 * @param {Object} speed 轮播速度 单位毫秒
+		 */
+		banner: function(id, width, speed) {
+			var list = [];
+			var imgs = $('#' + id + ' img');
+			for(i = 0; i < $(imgs).length; i++) {
+				list.push(i * width);
+			}
+			$(imgs).each(function(i) {
 
-					$(this).css({
-						'left': list[i] + 'px'
-					});
-
+				$(this).css({
+					'left': list[i] + 'px'
 				});
 
-				setInterval(function() {
+			});
 
-					if($(imgs[$(imgs).length - 1]).css('left') != '0px') {
-						$(imgs).each(function(i) {
+			setInterval(function() {
 
-							$(this).animate({
-								'left': parseInt($(this).css('left').replace(/px/, '')) - width + 'px'
-							});
+				if($(imgs[$(imgs).length - 1]).css('left') != '0px') {
+					$(imgs).each(function(i) {
 
+						$(this).animate({
+							'left': parseInt($(this).css('left').replace(/px/, '')) - width + 'px'
 						});
 
-					} else {
-						$(imgs).each(function(i) {
-							$(this).animate({
-								'left': list[i] + 'px'
-							});
+					});
 
+				} else {
+					$(imgs).each(function(i) {
+						$(this).animate({
+							'left': list[i] + 'px'
 						});
 
-					}
+					});
 
-				}, speed);
+				}
 
-			}
-		
-		
+			}, speed);
+
+		}
+
 	}
 })
 

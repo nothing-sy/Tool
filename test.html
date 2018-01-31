@@ -1,5 +1,11 @@
-<script type="text/javascript">
+<form action="" method="post">
 	
-	console.log('1'.charCodeAt()-48);
+	<input type="text" name="a" value="a"/>
+	<input type="text" name="b" value="b"/>
+</form>
+<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+console.log($('form')[0].tagName==='FORM');
 	
 </script>

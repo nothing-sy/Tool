@@ -505,3 +505,5 @@ $.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为
 
 *2018-01-24*
 - **新增ui命名空间，$.ui,新增轮播图片$.ui.banner(id,width,speed)**
+*2018-01-31*
+- **合并formTojson和dataTojson两个函数为formTojson，选取元素不仅限于form表单，而是所有具有name属性的input元素，比如$('form,#a,#b').formTojson({})**
