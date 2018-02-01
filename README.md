@@ -421,12 +421,22 @@ $.tools.jsonStringJoin(t,['name','age','phone','addr'],'@');//siyuan@18@13xxxxx@
 ```
 
 ## 按ASCII编码 从小到大排序 数组
-**AsciiSort(obj,attr)**
+**AsciiSort(obj,attr)，如果排序的值为非number类型，按照unicode排序，也相当于ASCII排序【升序】，如果是number则按大小排序**
 - obj 数组
 - attr 如果obj是JSON数组，则可以指定按某个属性的值排序
 ```javascript
-var newarr=AsciiSort([{a:100,b:5,f:85,c:2},{a:98},{a:155}],'a');//[{"a":100,"b":5,"f":85,"c":2},{"a":155},{"a":98}]
-var arr=AsciiSort([98,100,155]);//100,155,98
+
+var newarr=AsciiSort([{a:100,b:5,f:85,c:2},{a:98},{a:155}],'a');//[{"a":98},{"a":100,"b":5,"f":85,"c":2},{"a":155}]
+var carr=AsciiSort([{a:'mch_id',b:5,f:85,c:2},{a:'openid'},{a:'appid'}],'a');//[{"a":"appid"},{"a":"mch_id","b":5,"f":85,"c":2},{"a":"openid"}]
+var arr=AsciiSort([100,98,155]);//98,100,155
+var c=AsciiSort(['mch_id','body','openid']);//body,mch_id,openid
+
+//=======
+var str="body=物流/快递公司&mch_id=1497772112&appid=xxx&notify_url=xxx&nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F&openid=xxx-c8EzEA&out_trade_no=000000081517359702559&spbill_create_ip=58x.139&total_fee=1&trade_type=JSAPI"
+var arr=str.split('&');
+console.log(AsciiSort(arr));//appid=xxx,body=物流/快递公司,mch_id=1497772112,nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F,notify_url=xxx,openid=xxx-c8EzEA,out_trade_no=000000081517359702559,spbill_create_ip=58x.139,total_fee=1,trade_type=JSAPI
+
+
 ```
 
 
@@ -495,3 +505,4 @@ $.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为
 
 *2018-02-01*
 - **新增数组按照ASCII排序 AsciiSort**
+- **修改AsciiSort，排序规则，修复排序出错的问题**

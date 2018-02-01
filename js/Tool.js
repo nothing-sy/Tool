@@ -507,15 +507,20 @@ $.extend({
 
 		},
 		/**
-		 * 按ASCII码排序，实际上是利用array的sort()函数，默认unicode编码排序的方式，同样适用于ascii排序
+		 * 非number类型按照unicode码排序，number类型则按大小排序，实际上是利用array的sort()函数，
+		 * 默认unicode编码排序的方式，同样适用于ascii排序，一般用于签名排序
 		 * @param {Object} obj 需要排序的对象：数组/JSON数组
 		 * @param {Object} attr 如果obj为JSON数组，可以按照某个属性的值进行排序
 		 */
 		AsciiSort:function(obj,attribute)
 		{			
 		attribute&&obj.sort(function(a,b){
-			return (a[attribute]+'').charCodeAt()>(b[attribute]+'').charCodeAt();			
-		})||obj.sort();		
+			
+			return (typeof a[attribute]=='number'&&typeof b[attribute]=='number')&&a[attribute]-b[attribute]||
+			a[attribute]>b[attribute];
+		})||obj.sort(function(a,b){			
+			return (typeof a=='number'&&typeof b=='number')&&a-b||a>b;
+		});
 	return obj;
 		}
 	},

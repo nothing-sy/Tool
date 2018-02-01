@@ -2,67 +2,22 @@
 <div id="test" style="width:0px;height:17px;background:#0f0;">0%</div>
 <input type="button" value="Run" id="run"/>
 <script type="text/javascript">
-	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-/*var start = null;
-var ele = document.getElementById("test");
-var progress = 0;
-
-function step(timestamp) {
-	if( progress<=50)
-    progress += 3;
-    else
-     progress += 1;
-    ele.style.width = progress + "%";
-    ele.innerHTML=progress + "%";
-    if (progress < 100) {
-        requestAnimationFrame(step);
-    }
-}
-requestAnimationFrame(step);
-document.getElementById("run").addEventListener("click", function() {
-    ele.style.width = "1px";
-    progress = 0;
-    requestAnimationFrame(step);
-}, false);*/
-//&key=e13495514957114c30506faf7dd3f073
-var str="body=物流/快递公司&mch_id=1497772112&appid=wxc0fe446543b3d3fe&notify_url=http://www.cgrandsoft.cn/hengfa/notify.php&nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F&openid=ocyZH1DgxqJPkC5AH8D98-c8EzEA&out_trade_no=000000081517359702559&spbill_create_ip=58.62.53.139&total_fee=1&trade_type=JSAPI"
+var str="body=物流/快递公司&mch_id=1497772112&appid=xxx&notify_url=xxx&nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F&openid=xxx-c8EzEA&out_trade_no=000000081517359702559&spbill_create_ip=58x.139&total_fee=1&trade_type=JSAPI"
 var arr=str.split('&');
-//console.log(JSON.stringify(arr.sort()));
-//console.log(JSON.stringify(arr));
- function extractArrayFromJsonArray(j, p) {
-			var arr = [],
-				args = arguments;
-			return arguments.length > 2 && ((function() {
-
-				for(x in j) {
-					var jsons = {}; //对象引用的是地址，如果不重新新建的话会被修改数据
-					for(i = 1; i < args.length; i++) {
-
-						jsons[args[i]] = j[x][args[i]];
-
-					}
-					arr.push(jsons);
-				}
-
-			})(), arr) || ((function() {
-				for(i in j) {
-					arr.push(j[i][p]);
-				}
-			})(), arr)
-
-		}
-
 function AsciiSort(obj,attribute)
-		{			
+		{		
 		attribute&&obj.sort(function(a,b){
-			return (a[attribute]+'').charCodeAt()>(b[attribute]+'').charCodeAt();			
-		})||obj.sort();		
+			
+			return (typeof a[attribute]=='number'&&typeof b[attribute]=='number')&&a[attribute]-b[attribute]||
+			a[attribute]>b[attribute];
+		})||obj.sort(function(a,b){			
+			return (typeof a=='number'&&typeof b=='number')&&a-b||a>b;
+		});
 	return obj;
 		}
+console.log(AsciiSort(arr));
 
-var newarr=AsciiSort([{a:100,b:5,f:85,c:2},{a:98},{a:155}],'a');
-var arr=AsciiSort([98,100,155]);
-console.log(arr);
-console.log(JSON.stringify(newarr));
 
+//appid=wxc0fe446543b3d3fe&body=物流/快递公司&mch_id=1497772112&notify_url=http://www.cgrandsoft.cn/hengfa/notify.php&nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F&openid=ocyZH1DgxqJPkC5AH8D98-c8EzEA&out_trade_no=000000081517359702559&spbill_create_ip=58.62.53.139&total_fee=1&trade_type=JSAPI
+//appid=wxc0fe446543b3d3fe&body=物流/快递公司&mch_id=1497772112&nonce_str=bZlYdd2QZAZtqFUa1z3OKT6I4IiJWDlc&notify_url=http://www.cgrandsoft.cn/hengfa/notify.php&openid=ocyZH1DgxqJPkC5AH8D98-c8EzEA&out_trade_no=769633391517452064854&spbill_create_ip=117.136.41.56&total_fee=800&trade_type=JSAPI
 </script>
