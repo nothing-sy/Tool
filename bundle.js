@@ -69,8 +69,7 @@
 
 var $=__webpack_require__(1);
 
-console.log(JSON.stringify($('#c,#d,form').formTojson({w:8})));
-//console.log(JSON.stringify($('#c,#d').formTojson({t:12})));
+$.ui.banner('header',600,3000);
 
 
 /***/ }),
@@ -107,37 +106,6 @@ $.fn.extend({
 		});
 		return obj;
 	},
-
-	/**
-	 * 将选择的数据转换成JSON数据，不局限于 表单序列化数据
-	 * @param {Object} join
-	 * @param {Object} newObj
-	 */
-	/*dataTojson: function(newObj, join) {
-		var obj = {};
-
-		newObj = arguments[0] ? arguments[0] : {};
-		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
-		$.each($(this), function(i, _obj) {
-			if(obj.hasOwnProperty(_obj.name) && join) {
-				obj[_obj.name] += ',' + _obj.value;
-			} else {
-				obj[_obj.name] = _obj.value;
-			}
-		});
-		$.each(newObj, function(key, value) {
-			if(obj.hasOwnProperty(key) && join) {
-
-				obj[key] += ',' + value;
-
-			} else {
-
-				obj[key] = value;
-			}
-
-		});
-		return obj;
-	},*/
 	/**
 	 * 通过ID设置 日期控件 为当天
 	 */
@@ -628,40 +596,30 @@ $.extend({
 		banner: function(id, width, speed) {
 			var list = [];
 			var imgs = $('#' + id + ' img');
-			for(i = 0; i < $(imgs).length; i++) {
+			/*for(i = 0; i < $(imgs).length; i++) {
 				list.push(i * width);
-			}
+			}*/
 			$(imgs).each(function(i) {
-
+				list.push(i * width);
 				$(this).css({
 					'left': list[i] + 'px'
 				});
-
 			});
-
 			setInterval(function() {
-
 				if($(imgs[$(imgs).length - 1]).css('left') != '0px') {
 					$(imgs).each(function(i) {
-
 						$(this).animate({
 							'left': parseInt($(this).css('left').replace(/px/, '')) - width + 'px'
 						});
-
 					});
-
 				} else {
 					$(imgs).each(function(i) {
 						$(this).animate({
 							'left': list[i] + 'px'
 						});
-
 					});
-
 				}
-
 			}, speed);
-
 		}
 
 	}

@@ -420,6 +420,16 @@ var t={name:'siyuan',addr:'China-sichuan',phone:'13xxxxx',age:'18'};
 $.tools.jsonStringJoin(t,['name','age','phone','addr'],'@');//siyuan@18@13xxxxx@China-sichuan
 ```
 
+## 按ASCII编码 从小到大排序 数组
+**AsciiSort(obj,attr)**
+- obj 数组
+- attr 如果obj是JSON数组，则可以指定按某个属性的值排序
+```javascript
+var newarr=AsciiSort([{a:100,b:5,f:85,c:2},{a:98},{a:155}],'a');//[{"a":100,"b":5,"f":85,"c":2},{"a":155},{"a":98}]
+var arr=AsciiSort([98,100,155]);//100,155,98
+```
+
+
 ## 轮播图片
 **banner(id,width,speed)**
 - id 轮播组件的id
@@ -479,5 +489,9 @@ $.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为
 
 *2018-01-24*
 - **新增ui命名空间，$.ui,新增轮播图片$.ui.banner(id,width,speed)**
+
 *2018-01-31*
 - **合并formTojson和dataTojson两个函数为formTojson，选取元素不仅限于form表单，而是所有具有name属性的input元素，比如$('form,#a,#b').formTojson({})**
+
+*2018-02-01*
+- **新增数组按照ASCII排序 AsciiSort**

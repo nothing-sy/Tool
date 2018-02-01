@@ -505,6 +505,18 @@ $.extend({
 			}
 			return res;
 
+		},
+		/**
+		 * 按ASCII码排序，实际上是利用array的sort()函数，默认unicode编码排序的方式，同样适用于ascii排序
+		 * @param {Object} obj 需要排序的对象：数组/JSON数组
+		 * @param {Object} attr 如果obj为JSON数组，可以按照某个属性的值进行排序
+		 */
+		AsciiSort:function(obj,attribute)
+		{			
+		attribute&&obj.sort(function(a,b){
+			return (a[attribute]+'').charCodeAt()>(b[attribute]+'').charCodeAt();			
+		})||obj.sort();		
+	return obj;
 		}
 	},
 	ui: {
@@ -518,40 +530,27 @@ $.extend({
 		banner: function(id, width, speed) {
 			var list = [];
 			var imgs = $('#' + id + ' img');
-			for(i = 0; i < $(imgs).length; i++) {
-				list.push(i * width);
-			}
 			$(imgs).each(function(i) {
-
+				list.push(i * width);
 				$(this).css({
 					'left': list[i] + 'px'
 				});
-
 			});
-
 			setInterval(function() {
-
 				if($(imgs[$(imgs).length - 1]).css('left') != '0px') {
 					$(imgs).each(function(i) {
-
 						$(this).animate({
 							'left': parseInt($(this).css('left').replace(/px/, '')) - width + 'px'
 						});
-
 					});
-
 				} else {
 					$(imgs).each(function(i) {
 						$(this).animate({
 							'left': list[i] + 'px'
 						});
-
 					});
-
 				}
-
 			}, speed);
-
 		}
 
 	}
