@@ -475,8 +475,56 @@ $.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为
 
 ```
 
+## 新增圆形菜单
+**circularMenu(id,radius,sp)**
+- id 需符合jq选择器，比如id,class等等'#center'，表示主菜单
+- radius 主菜单圆心与子菜单的圆心距
+- sp 起始位置，'left' 'up' 'right' 'down'
+- **样式中，主菜单和子菜单的大小可以改变，整个菜单的位置是根据.center来移动的，所以可以调节left和top**
+```html
+<style type="text/css">
+#menu {
+				width: 200px;
+				height: 200px;
+				background: red;
+				position: relative;
+			}
+			
+			#menu .sub {
+				width: 40px;
+				height: 40px;
+				background: lightskyblue;
+				position: absolute;
+				border-radius: 50%;
+				display: none;
+				opacity: 0;
+			}
+			
+			#menu .center {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				background: lightskyblue;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+			
+		</style>	
+			<div id="menu">
+			<div class="center" id="center"></div>
+			<div class="sub" id="menu1"></div>
+			<div class="sub" id="menu2"></div>
+			<div class="sub" id="menu3"></div>
+			<div class="sub" id="menu4"></div>
 
+		</div>
 
+```
+
+```javascript
+$.ui.circularMenu('#menu .center',100,'left');
+```
 
 ## 更新日志
 
@@ -506,3 +554,6 @@ $.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为
 *2018-02-01*
 - **新增数组按照ASCII排序 AsciiSort**
 - **修改AsciiSort，排序规则，修复排序出错的问题**
+
+*2018-02-02*
+- **新增UI作用域，circularMenu，四分之一圆形菜单**

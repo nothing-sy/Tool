@@ -1,3 +1,3 @@
 var $=require('./Tool');
 
-$.ui.banner('header',600,3000);
+$.ui.circularMenu('#menu .center',100,'left');

@@ -1,23 +1,130 @@
-<meta charset="UTF-8"/>
-<div id="test" style="width:0px;height:17px;background:#0f0;">0%</div>
-<input type="button" value="Run" id="run"/>
-<script type="text/javascript">
-var str="body=物流/快递公司&mch_id=1497772112&appid=xxx&notify_url=xxx&nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F&openid=xxx-c8EzEA&out_trade_no=000000081517359702559&spbill_create_ip=58x.139&total_fee=1&trade_type=JSAPI"
-var arr=str.split('&');
-function AsciiSort(obj,attribute)
-		{		
-		attribute&&obj.sort(function(a,b){
+<html>
+
+	<head>
+		<title>菜单</title>
+		<meta charset="UTF-8" />
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
 			
-			return (typeof a[attribute]=='number'&&typeof b[attribute]=='number')&&a[attribute]-b[attribute]||
-			a[attribute]>b[attribute];
-		})||obj.sort(function(a,b){			
-			return (typeof a=='number'&&typeof b=='number')&&a-b||a>b;
-		});
-	return obj;
-		}
-console.log(AsciiSort(arr));
+			#menu {
+				width: 200px;
+				height: 200px;
+				background: red;
+				position: relative;
+			}
+			
+			#menu .sub {
+				width: 40px;
+				height: 40px;
+				background: lightskyblue;
+				position: absolute;
+				border-radius: 50%;
+				opacity: 0;
+			}
+			
+			#menu .center {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				background: lightskyblue;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+		</style>
+	</head>
 
+	<body>
+		<div id="menu">
+			<div class="center" id="center"></div>
+			<div class="sub" id="menu1"></div>
+			<div class="sub" id="menu2"></div>
+			<div class="sub" id="menu3"></div>
 
-//appid=wxc0fe446543b3d3fe&body=物流/快递公司&mch_id=1497772112&notify_url=http://www.cgrandsoft.cn/hengfa/notify.php&nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F&openid=ocyZH1DgxqJPkC5AH8D98-c8EzEA&out_trade_no=000000081517359702559&spbill_create_ip=58.62.53.139&total_fee=1&trade_type=JSAPI
-//appid=wxc0fe446543b3d3fe&body=物流/快递公司&mch_id=1497772112&nonce_str=bZlYdd2QZAZtqFUa1z3OKT6I4IiJWDlc&notify_url=http://www.cgrandsoft.cn/hengfa/notify.php&openid=ocyZH1DgxqJPkC5AH8D98-c8EzEA&out_trade_no=769633391517452064854&spbill_create_ip=117.136.41.56&total_fee=800&trade_type=JSAPI
-</script>
+			
+
+		</div>
+
+		<!--<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="bundle.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			/*function drawMenu(id,radius, part, sp)
+			 * {
+				var curRadius = 0; //最后一个所画子菜单相对于主菜单的中心角度
+				var averageRadius = (90 / part); //根据几等分来判断四分之一圆形的平均角度
+				var subMenu = $('#menu .sub'); //获取所有子菜单
+				var subCenter = $('#menu .center'); //主菜单
+				//主菜单的中心X,Y坐标轴
+				var subCenterX = $(subCenter).offset().left;
+				var subCenterY = $(subCenter).offset().top;
+				var menuList = []; //存储子菜单的位置属性
+				var curX, curY; //中心圆与子菜单的绝对距离
+				var turnX, turnY; //子菜单与中心园的相对方向
+				switch(sp) {
+					case 'left':
+						turnX = -1;
+						turnY = -1;
+						break;
+					case 'up':
+						turnX = 1;
+						turnY = -1;
+						break;
+					case 'right':
+						turnX = 1;
+						turnY = 1;
+						break;
+					case 'down':
+						turnX = -1;
+						turnY = 1;
+						break;
+
+				}
+
+				for(i = 0; i < part + 1; i++) {
+					curX = Math.cos(curRadius * Math.PI / 180) * radius * turnX;
+					curY = Math.sin(curRadius * Math.PI / 180) * radius * turnY;
+					menuList.push({
+						x: curX,
+						y: curY
+					});
+					curRadius += averageRadius;
+				}
+
+				$('#menu .sub').each(function(i) {
+					$(this).css({
+						'left': (subCenterX + menuList[i].x),
+						'top': (subCenterY + menuList[i].y)
+					});
+
+				})
+
+				$('#menu .sub').show();
+				var num = 0;
+				//展示动画
+				function next(num) {
+					if(num < $('#menu .sub').length) {
+
+						$('#menu .sub').eq(num).animate({
+							opacity: 1
+						}, 300, function() {
+							next(++num)
+						});
+
+					}
+
+				}
+
+				$(id).on('click', function() {
+					next(num);
+				})
+
+			}
+
+			circularMenu('#menu .center', 100, 3, 'down');*/
+		</script>
+	</body>
+
+</html>

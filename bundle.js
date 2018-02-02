@@ -69,7 +69,7 @@
 
 var $=__webpack_require__(1);
 
-$.ui.banner('header',600,3000);
+$.ui.circularMenu('#menu .center',100,'left');
 
 
 /***/ }),
@@ -85,8 +85,9 @@ $.fn.extend({
 	 * @param {Object} newObj 传入控件以外的的JSON数据参数
 	 */
 	formTojson: function(newObj, join) {
-		var obj = {},arr;
-		newObj = arguments[0]||{};
+		var obj = {},
+			arr;
+		newObj = arguments[0] || {};
 		//join=arguments[1]?arguments[1]:false;//默认替换而不是用逗号隔开
 		//首先把表单里面的内容进行合并，如果name一样可以通过join参数设置是否用逗号隔开并合并
 		$.each($(this).serializeArray(), function(i, _obj) {
@@ -583,6 +584,21 @@ $.extend({
 			}
 			return res;
 
+		},
+		/**
+		 * 非number类型按照unicode码排序，number类型则按大小排序，实际上是利用array的sort()函数，
+		 * 默认unicode编码排序的方式，同样适用于ascii排序，一般用于签名排序
+		 * @param {Object} obj 需要排序的对象：数组/JSON数组
+		 * @param {Object} attr 如果obj为JSON数组，可以按照某个属性的值进行排序
+		 */
+		AsciiSort: function(obj, attribute) {
+			attribute && obj.sort(function(a, b) {
+				return(typeof a[attribute] == 'number' && typeof b[attribute] == 'number') && a[attribute] - b[attribute] ||
+					a[attribute] > b[attribute];
+			}) || obj.sort(function(a, b) {
+				return(typeof a == 'number' && typeof b == 'number') && a - b || a > b;
+			});
+			return obj;
 		}
 	},
 	ui: {
@@ -596,9 +612,6 @@ $.extend({
 		banner: function(id, width, speed) {
 			var list = [];
 			var imgs = $('#' + id + ' img');
-			/*for(i = 0; i < $(imgs).length; i++) {
-				list.push(i * width);
-			}*/
 			$(imgs).each(function(i) {
 				list.push(i * width);
 				$(this).css({
@@ -620,6 +633,71 @@ $.extend({
 					});
 				}
 			}, speed);
+		},
+		circularMenu: function(id, radius, sp) /*radius中心圆和其他子菜单的的中心距离，part是四分之1圆的几等分,sp 起始位置，dc 顺时针还是逆时针*/ {
+			var curRadius = 0; //最后一个所画子菜单相对于主菜单的中心角度
+			var part = $('#menu .sub').length - 1;
+			var averageRadius = (90 / part); //根据几等分来判断四分之一圆形的平均角度
+			var subMenu = $('#menu .sub'); //获取所有子菜单
+			var subCenter = $('#menu .center'); //主菜单
+			//主菜单的中心X,Y坐标轴
+			var subCenterX = $(subCenter).offset().left;
+			var subCenterY = $(subCenter).offset().top;
+			var menuList = []; //存储子菜单的位置属性
+			var curX, curY; //中心圆与子菜单的绝对距离
+			var turnX, turnY; //子菜单与中心园的相对方向
+			switch(sp) {
+				case 'left':
+					turnX = -1;
+					turnY = -1;
+					break;
+				case 'up':
+					turnX = 1;
+					turnY = -1;
+					break;
+				case 'right':
+					turnX = 1;
+					turnY = 1;
+					break;
+				case 'down':
+					turnX = -1;
+					turnY = 1;
+					break;
+
+			}
+
+			for(i = 0; i < part + 1; i++) {
+				curX = Math.cos(curRadius * Math.PI / 180) * radius * turnX;
+				curY = Math.sin(curRadius * Math.PI / 180) * radius * turnY;
+				menuList.push({
+					x: curX,
+					y: curY
+				});
+				curRadius += averageRadius;
+				$('#menu .sub').eq(i).css({
+					'left': (subCenterX + menuList[i].x),
+					'top': (subCenterY + menuList[i].y)
+				});
+			}
+			$('#menu .sub').show();
+			var num = 0;
+			//展示动画
+			function next(num) {
+				if(num < $('#menu .sub').length) {
+					$('#menu .sub').eq(num).animate({
+						opacity: 1
+					}, 300, function() {
+						next(++num)
+					});
+
+				}
+
+			}
+
+			$(id).on('click', function() {
+				next(num);
+			})
+
 		}
 
 	}
