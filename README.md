@@ -496,7 +496,6 @@ $.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为
 				background: lightskyblue;
 				position: absolute;
 				border-radius: 50%;
-				display: none;
 				opacity: 0;
 			}
 			
