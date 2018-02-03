@@ -679,24 +679,31 @@ $.extend({
 					'top': (subCenterY + menuList[i].y)
 				});
 			}
-			$('#menu .sub').show();
-			var num = 0;
+			//$('#menu .sub').show();
+			var num = 0,
+				menuClickTime = 0;
 			//展示动画
 			function next(num) {
+				var type;
+				console.log(num);
 				if(num < $('#menu .sub').length) {
+					menuClickTime % 2 == 0 && (type = 1) || (type = 0);
 					$('#menu .sub').eq(num).animate({
-						opacity: 1
+						opacity: type
 					}, 300, function() {
 						next(++num)
 					});
 
+				}
+				if(num == part) {
+					menuClickTime++;
 				}
 
 			}
 
 			$(id).on('click', function() {
 				next(num);
-			})
+			});
 
 		}
 
