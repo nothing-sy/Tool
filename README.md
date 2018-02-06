@@ -205,20 +205,20 @@ function getResponce(res)
 	alert(res.name+res.age);//siyuan18
 	
 }
+```
 ## 获取随机数 - ***getRandom***
 **getRandom(num, type)**
 - num 随机数的位数
 - type 随机数的类型，'number','word','hybrid'
-```javascript
 
-
+``` 
 getRandom(num, type);//num:获取位数，type:'number','word','hybrid'，意思是返回纯数字，纯字母，或者混合型随机数
-
-```
 console.log($.tools.getRandom(5,'number'));//00622
 console.log($.tools.getRandom(5,'word'));//tbEYI
 console.log($.tools.getRandom(5,'hybrid'));//F9liT
+
 ```
+
 
 ## 倒计时 -***countDown***
 ```javascript
@@ -525,6 +525,18 @@ $.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为
 $.ui.circularMenu('#menu .center',100,'left');
 ```
 
+
+## 新增等待UI
+**showWaiting:(id, number, spacing, radius)**
+- id canvas id
+- number 点的个数
+- spacing 点间距
+- radius 半径
+
+```javascript
+$.ui.showWaiting('canvas',3,20,5);
+```
+
 ## 更新日志
 
 *2018-01-06* 
@@ -556,3 +568,6 @@ $.ui.circularMenu('#menu .center',100,'left');
 
 *2018-02-02*
 - **新增UI作用域，circularMenu，四分之一圆形菜单**
+
+*2018-02-06*
+- **新增简单等待UI,canvas**

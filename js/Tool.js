@@ -625,7 +625,45 @@ $.extend({
 				next(num);
 			});
 
-		}
+		},
+		showWaiting:function (id, number, spacing, radius) {
+
+				var list = [];
+				var canvas = $('#' + id)[0];
+				var ctx = canvas.getContext('2d');
+				ctx.fillStyle = 'black';
+				var w = $('#' + id).width(),
+					h = $('#' + id).height();
+				var startPosition = {
+					x: w / 2 - (number - 1) * spacing / 2,
+					y: h / 2
+				}
+
+				for(i = 0; i < number; i++) {
+
+					list.push({
+						x: startPosition.x + i * spacing,
+						y: startPosition.y
+					})
+				}
+				var curNumber = 0;
+
+				function show() {
+					if(curNumber < number) {
+						ctx.beginPath();
+						ctx.arc(list[curNumber].x, list[curNumber].y, radius, 0, 2 * Math.PI);
+						ctx.fill();
+						curNumber++;
+					} else {
+						ctx.clearRect(0, 0, w, h);
+						curNumber = 0;
+					}
+
+					setTimeout(show, 320);
+
+				}
+				show();
+			}
 
 	}
 })
