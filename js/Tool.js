@@ -521,6 +521,23 @@ $.extend({
 				return(typeof a == 'number' && typeof b == 'number') && a - b || a > b;
 			});
 			return obj;
+		},
+		/**
+		 * 将数字以金额形式展示，每三位一个逗号
+		 * @param {Object} m
+		 */
+		money:function(m){
+			
+			var mStr=m.toString();
+			var left=mStr.length%3;
+			var res=mStr.slice(0,left);
+			
+			for(var i=left;i<mStr.length;i+=3)
+				{
+					res+=','+mStr.slice(i,i+3);
+					
+				}
+			return res||false;	
 		}
 	},
 	ui: {

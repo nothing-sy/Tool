@@ -21,9 +21,6 @@
     "url": "https://github.com/heartOfblack/Tool/issues"
   },
   "homepage": "https://github.com/heartOfblack/Tool#readme",
-  "dependencies": {
-    "npm-user-downloads": "^1.2.0"
-  },
   "devDependencies": {
     "css-loader": "^0.28.8",
     "jquery": "^3.2.1",
