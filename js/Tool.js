@@ -526,18 +526,15 @@ $.extend({
 		 * 将数字以金额形式展示，每三位一个逗号
 		 * @param {Object} m
 		 */
-		money:function(m){
-			
-			var mStr=m.toString();
-			var left=mStr.length%3;
-			var res=mStr.slice(0,left);
-			
-			for(var i=left;i<mStr.length;i+=3)
-				{
-					res+=','+mStr.slice(i,i+3);
-					
-				}
-			return res||false;	
+		money: {
+			var mStr = m.toString(),
+				left = mStr.length % 3;
+			var res = mStr.slice(0, left);
+			left > 0 && mStr.length > 3 && (res += ',');
+			for(var i = left; i < mStr.length; i += 3) {
+				(i != mStr.length - 3) && (res += mStr.slice(i, i + 3) + ',') || (res += mStr.slice(i, i + 3));
+			}
+			return res || false;
 		}
 	},
 	ui: {
@@ -643,44 +640,44 @@ $.extend({
 			});
 
 		},
-		showWaiting:function (id, number, spacing, radius) {
+		showWaiting: function(id, number, spacing, radius) {
 
-				var list = [];
-				var canvas = $('#' + id)[0];
-				var ctx = canvas.getContext('2d');
-				ctx.fillStyle = 'black';
-				var w = $('#' + id).width(),
-					h = $('#' + id).height();
-				var startPosition = {
-					x: w / 2 - (number - 1) * spacing / 2,
-					y: h / 2
-				}
-
-				for(i = 0; i < number; i++) {
-
-					list.push({
-						x: startPosition.x + i * spacing,
-						y: startPosition.y
-					})
-				}
-				var curNumber = 0;
-
-				function show() {
-					if(curNumber < number) {
-						ctx.beginPath();
-						ctx.arc(list[curNumber].x, list[curNumber].y, radius, 0, 2 * Math.PI);
-						ctx.fill();
-						curNumber++;
-					} else {
-						ctx.clearRect(0, 0, w, h);
-						curNumber = 0;
-					}
-
-					setTimeout(show, 320);
-
-				}
-				show();
+			var list = [];
+			var canvas = $('#' + id)[0];
+			var ctx = canvas.getContext('2d');
+			ctx.fillStyle = 'black';
+			var w = $('#' + id).width(),
+				h = $('#' + id).height();
+			var startPosition = {
+				x: w / 2 - (number - 1) * spacing / 2,
+				y: h / 2
 			}
+
+			for(i = 0; i < number; i++) {
+
+				list.push({
+					x: startPosition.x + i * spacing,
+					y: startPosition.y
+				})
+			}
+			var curNumber = 0;
+
+			function show() {
+				if(curNumber < number) {
+					ctx.beginPath();
+					ctx.arc(list[curNumber].x, list[curNumber].y, radius, 0, 2 * Math.PI);
+					ctx.fill();
+					curNumber++;
+				} else {
+					ctx.clearRect(0, 0, w, h);
+					curNumber = 0;
+				}
+
+				setTimeout(show, 320);
+
+			}
+			show();
+		}
 
 	}
 })
