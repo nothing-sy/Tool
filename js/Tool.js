@@ -526,7 +526,7 @@ $.extend({
 		 * 将数字以金额形式展示，每三位一个逗号
 		 * @param {Object} m
 		 */
-		money: {
+		money: function(){
 			var mStr = m.toString(),
 				left = mStr.length % 3;
 			var res = mStr.slice(0, left);
