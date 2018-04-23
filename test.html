@@ -13,10 +13,30 @@
 
 	<body>
 		<!--<canvas id="canvas" width="500" height="500"></canvas>-->
-
+<input type="text" name="test" id="test" value="" oninput='go()'/>
 		<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="bundle.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="bundle.js" type="text/javascript" charset="utf-8"></script>-->
 		<script type="text/javascript">
+			
+			$.fn.extend({
+
+				test: function() {
+					var reg = /"|'|delete|select|insert|update|where|=|set|drop|-/;
+					var res=true;
+					$.each($(this), function() {
+
+						reg.test($(this).val()) && (res=false);
+
+					});
+					return res;
+
+				}
+
+			});
+			function go()
+			{
+				console.log($('input').test());
+			}
 			
 		</script>
 	</body>
