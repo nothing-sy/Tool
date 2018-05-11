@@ -39,6 +39,23 @@ $.fn.extend({
 
 	},
 	/**
+	 * 检查敏感字符，防止注入,无敏感字符返回true，有敏感字符返回false
+	 * 
+	 */
+	checkSqlInjection: function() {
+					var reg = /"|'|delete|select|insert|update|where|=|set|drop|-/;
+					var res=true;
+					$.each($(this), function() {
+
+						reg.test($(this).val()) && (res=false);
+
+					});
+					return res;
+
+				}
+	,
+	
+	/**
 	 * 验证起始日期和终止日期的有效性
 	 */
 	checkDate: function() {
@@ -526,7 +543,7 @@ $.extend({
 		 * 将数字以金额形式展示，每三位一个逗号
 		 * @param {Object} m
 		 */
-		money: {
+		money: function(){
 			var mStr = m.toString(),
 				left = mStr.length % 3;
 			var res = mStr.slice(0, left);
