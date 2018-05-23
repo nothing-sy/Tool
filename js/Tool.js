@@ -526,7 +526,7 @@ $.extend({
 		 * 将数字以金额形式展示，每三位一个逗号
 		 * @param {Object} m
 		 */
-		money: {
+		money: function(m){
 			var mStr = m.toString(),
 				left = mStr.length % 3;
 			var res = mStr.slice(0, left);
@@ -679,6 +679,31 @@ $.extend({
 			show();
 		}
 
+	},
+	/**
+	 * debug请求，主要是在调试过程中，请求后台失败(200以外的状态返回码)，能及时输出到控制台
+	 */
+	debug:function(){
+		$(document).ajaxComplete(function(event, xhr, settings) {
+	//日志格式:   请求状态【成功/失败】，请求的接口，发出请求的页面，返回的状态码，返回的内容，
+	var status=xhr.status;//200
+	if(status!=200)
+	{
+	var URL=event.target.URL;
+	var readyState=xhr.readyState;//1,2,3,4
+	var statusText=xhr.statusText;
+	var responseText=xhr.responseText;
+	var contentType=settings.contentType;
+	var type=settings.type;
+	var targetUrl=settings.url;
+	var data=type.toUpperCase()=='POST'&&settings.data||'';	
+	var log="【状态码】："+status+"  "+statusText+"【响应内容】"+responseText+" 【XMLHttpRequest 状态】 "+readyState+"  【请求内容类型 】"+contentType+" 【请求方式】："+type+"【请求数据】："+data+"【发起请求地址】"+URL+"【请求接口】"+targetUrl;
+	console.log(log);
+		
+	}
+});
+		
+		
 	}
 })
 
