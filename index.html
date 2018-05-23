@@ -28,21 +28,7 @@
 		<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/Tool.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-	
-		function money(m){		
-			console.log(m);
-			var mStr=m.toString(),left=mStr.length%3;
-			
-			var res=mStr.slice(0,left);			
-			left>0&&mStr.length>3&&(res+=',');		
-			for(var i=left;i<mStr.length;i+=3)
-				{
-					(i!=mStr.length-3)&&(res+=mStr.slice(i,i+3)+',')||(res+=mStr.slice(i,i+3));					
-				}
-			return res||false;	
-		}
-		console.log(money(0000012345678))
-		</script>
+</script>
 
 	</body>
 
