@@ -552,7 +552,33 @@ $.extend({
 				(i != mStr.length - 3) && (res += mStr.slice(i, i + 3) + ',') || (res += mStr.slice(i, i + 3));
 			}
 			return res || false;
-		}
+		},
+		/**
+		 * 检验初始参数Object对象的必须属性
+		 * @param {Object} parameter 传入的参数
+		 * @param {Object} baseOption 自定义必须参数
+		 * return ture/false
+		 */
+		_checkOption:function(parameter, baseOption)
+  {
+    var restult = true;
+    Object.keys(baseOption).forEach(function(item)
+    {
+      try
+      {
+        if (!parameter.hasOwnProperty(item))
+        {
+          throw "传入参数中缺少【" + item + "】属性"
+        }
+      }
+      catch (err)
+      {
+        console.log(err)
+        restult = false
+      }
+    })
+    return restult
+  }
 	},
 	ui: {
 		/**

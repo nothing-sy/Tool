@@ -540,10 +540,19 @@ $.ui.showWaiting('canvas',3,20,5);
 
 
 ## 新增金额划分，如5000 =>5,000
-**money(m)
+**money(m)**
 - m 数字金额
 ```
 $.tools.money(50032154654165400)//50,032,154,654,165,400
+```
+
+**_checkOption(opt,defaultOption)**
+- opt 传入object
+- defaultOption 自定义必须属性
+```javascript
+defaultOption={a:'',b:'',c:''}
+opt={a:'1',b:'2'}
+$.tools._checkPotion(opt,defaultOption);// false 提示传入参数中缺少【c】属性
 ```
 
 ## 更新日志
@@ -582,3 +591,5 @@ $.tools.money(50032154654165400)//50,032,154,654,165,400
 - **新增简单等待UI,canvas**
 *2018-04-19*
 - **新增金额显示**
+*2018-05-30*
+- **新增_checkOption函数，检测object参数的必需性**
