@@ -1,7 +1,9 @@
+const path = require('path')
 module.exports = {
-		entry: "./js/new.js",
+		entry: "/src/Tool.js",
 		output: {
-			filename: 'bundle.js'
+			path:path.resolve(__dirname, 'lib'),
+			library: 'MyLibrary'
 		}
 		
 		

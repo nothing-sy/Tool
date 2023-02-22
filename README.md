@@ -6,27 +6,13 @@
 ### 用法
 
 ```
-script标签导入
-
-<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/Tool.js"></script>
 
 npm 安装
 
-npm install --save-dev jquery
 npm install --save-dev jqtools
 
-var $=require('jqtools');//$仍然是JQ对象，此时的JQ对象已经做了扩展操作，函数使用方法如下。
-最后使用webpack打包生成即可。
-
-
-如果需要使用弹窗插件，请安装sweetalert
-
-npm install --save-dev sweetalert
-require('sweetalert');
-
-安装包中已经存在sweetalert必要的样式文件，只需要引入便可直接使用。
-使用方法请参考 sweetalert的官网，用法一致
+`import $ from 'jqtools'`
+`$(xx).xx`或 `$.tools.xxx()`
 
 ```
 
@@ -440,105 +426,6 @@ console.log(AsciiSort(arr));//appid=xxx,body=物流/快递公司,mch_id=14977721
 
 ```
 
-
-## 轮播图片
-**banner(id,width,speed)**
-- id 轮播组件的id
-- width 轮播图片的宽度
-- speed 轮播的速度
-```html
-<style type="text/css">
-			#header
-			{
-				position: relative;
-				width: 600px;
-				height: 200px;
-				overflow: hidden;
-			}
-			#header img
-			{
-				position: absolute;
-				
-			}
-		</style>
-		<div id="header">
-			<img src="img/2.png" />
-			<img src="img/3.png" />
-			<img src="img/4.png" />
-			<img src="img/404.jpg" />
-			<img src="img/bg.jpg" />			
-		</div>
-
-<script>
-$.ui.banner('header',600,3000);//600与样式中的宽度保持一致，speed为播放速度
-
-</script>
-
-```
-
-## 新增圆形菜单
-**circularMenu(id,radius,sp)**
-- id 需符合jq选择器，比如id,class等等'#center'，表示主菜单
-- radius 主菜单圆心与子菜单的圆心距
-- sp 起始位置，'left' 'up' 'right' 'down'
-- **样式中，主菜单和子菜单的大小可以改变，整个菜单的位置是根据.center来移动的，所以可以调节left和top**
-```html
-<style type="text/css">
-#menu {
-				width: 200px;
-				height: 200px;
-				background: red;
-				position: relative;
-			}
-			
-			#menu .sub {
-				width: 40px;
-				height: 40px;
-				background: lightskyblue;
-				position: absolute;
-				border-radius: 50%;
-				opacity: 0;
-			}
-			
-			#menu .center {
-				width: 50px;
-				height: 50px;
-				border-radius: 50%;
-				background: lightskyblue;
-				position: absolute;
-				left: 100px;
-				top: 100px;
-			}
-			
-		</style>	
-			<div id="menu">
-			<div class="center" id="center"></div>
-			<div class="sub" id="menu1"></div>
-			<div class="sub" id="menu2"></div>
-			<div class="sub" id="menu3"></div>
-			<div class="sub" id="menu4"></div>
-
-		</div>
-
-```
-
-```javascript
-$.ui.circularMenu('#menu .center',100,'left');
-```
-
-
-## 新增等待UI
-**showWaiting:(id, number, spacing, radius)**
-- id canvas id
-- number 点的个数
-- spacing 点间距
-- radius 半径
-
-```javascript
-$.ui.showWaiting('canvas',3,20,5);
-```
-
-
 ## 新增金额划分，如5000 =>5,000
 **money(m)**
 - m 数字金额
@@ -554,42 +441,3 @@ defaultOption={a:'',b:'',c:''}
 opt={a:'1',b:'2'}
 $.tools._checkPotion(opt,defaultOption);// false 提示传入参数中缺少【c】属性
 ```
-
-## 更新日志
-
-*2018-01-06* 
-   - **修改extractArrayFromJson函数更名为extractArrayFromJsonArray，允许从json数组中提取一个或多个属性值并返回数组对象**
-   - **修改findIndex函数，允许查找json数组**
-   - **arrayInputJson更名为arrayInputJsonArray**
-   - **修改nextElement函数问题,用法有修改，请参考函数说明**
-   - **规范文档用语： 数组，JSON，JSON数组对应函数名中的  array,  json  jsonArray=》[1,2,3] ,{a:1,b:2},  [{a:1},{b:2}]**
-   - **修复extractArrayFromJsonArray获取属性一直获取的是最后一个匹配值的问题**
-   
-*2018-01-11*
-- **提供sweealert弹窗必须文件，可以安装npm install sweetalert 并在代码中引用即可**
-
-*2018-01-15*
-- **新增findIndexWithCallback，通过回调函数查找索引，支持数组和JSON数组**
-
-*2018-01-16*
-- **新增jsonStringJoin，拼接JSON数据**
-
-*2018-01-24*
-- **新增ui命名空间，$.ui,新增轮播图片$.ui.banner(id,width,speed)**
-
-*2018-01-31*
-- **合并formTojson和dataTojson两个函数为formTojson，选取元素不仅限于form表单，而是所有具有name属性的input元素，比如$('form,#a,#b').formTojson({})**
-
-*2018-02-01*
-- **新增数组按照ASCII排序 AsciiSort**
-- **修改AsciiSort，排序规则，修复排序出错的问题**
-
-*2018-02-02*
-- **新增UI作用域，circularMenu，四分之一圆形菜单**
-
-*2018-02-06*
-- **新增简单等待UI,canvas**
-*2018-04-19*
-- **新增金额显示**
-*2018-05-30*
-- **新增_checkOption函数，检测object参数的必需性**
