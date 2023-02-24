@@ -1,5 +1,4 @@
 import $ from 'jquery'
-//require('sweetalert');
 $.fn.extend({
 	/**
 	 * 可选取的元素包括form或者自选元素比如:$('form')  和 $('#a,#b')
@@ -581,5 +580,4 @@ $.extend({
   }
 	}
 })
-
 export default $
