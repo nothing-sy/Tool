@@ -350,7 +350,7 @@ $.extend({
 			start = arguments[1] ? arguments[1] : 0;
 			end = arguments[2] ? arguments[2] : 5;
 			dateList.push(d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds());
-			for(i = start; i < end + 1; i++) {
+			for(let i = start; i < end + 1; i++) {
 				i < 2 && (i != end && (res += dateList[i] + split) || (res += dateList[i])) || i == 2 && (i != end && (res += dateList[i] + ' ') || (res += dateList[i])) || (i != end && (res += dateList[i] + ':') || (res += dateList[i]));
 
 			}

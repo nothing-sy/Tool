@@ -1,8 +1,8 @@
 {
   "name": "jqtools",
-  "version": "1.4.0",
+  "version": "1.5.2",
   "description": "jquery tool for DOM or data",
-  "main": "lib/main.js",
+  "main": "./lib/main.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production"
@@ -11,6 +11,8 @@
     "type": "git",
     "url": ""
   },
+  "files": ["lib","types"],
+  "types": "./types/index.d.ts",
   "keywords": [
     "jquery",
     "tools",
