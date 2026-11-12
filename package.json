@@ -1,37 +1,53 @@
 {
   "name": "jqtools",
-  "version": "1.5.2",
-  "description": "jquery tool for DOM or data",
+  "version": "1.5.3",
+  "description": "基于 jQuery 的 DOM 与数据处理工具集：表单转 JSON、日期、正则校验、深拷贝、数组/JSON 分组与转换等",
+  "type": "module",
   "main": "./lib/main.mjs",
+  "module": "./lib/main.mjs",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./lib/main.mjs",
+      "default": "./lib/main.mjs"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production"
+    "test": "node --test test/tools.test.mjs",
+    "build": "webpack --config webpack.config.cjs --mode production",
+    "prepublishOnly": "npm test && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/nothing-sy/Tool.git"
   },
-  "files": ["lib","types"],
+  "bugs": {
+    "url": "https://github.com/nothing-sy/Tool/issues"
+  },
+  "files": [
+    "lib",
+    "types",
+    "src"
+  ],
   "types": "./types/index.d.ts",
   "keywords": [
     "jquery",
     "tools",
-    "DOM"
+    "DOM",
+    "form",
+    "json",
+    "utils"
   ],
   "author": "heartofblack",
   "license": "ISC",
-  "homepage": "",
+  "homepage": "https://github.com/nothing-sy/Tool#readme",
+  "peerDependencies": {
+    "jquery": ">=3.0.0"
+  },
   "devDependencies": {
-    "css-loader": "^0.28.8",
-    "jquery": "^3.2.1",
-    "less": "^2.7.3",
-    "less-loader": "^4.0.5",
-    "style-loader": "^0.19.1",
-    "sweetalert": "^2.1.0",
+    "jquery": "^3.7.1",
+    "jsdom": "^25.0.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
-  },
-  "dependencies": {
-    "user": "0.0.0"
   }
 }

@@ -1,443 +1,350 @@
-# Tool
-基于Jquery.js日常应用到的工具,主要用于DOM操作和数据处理，如表单数据转化成JSON，设置初始日期，正则验证，JSON数组转换，JSON数组分类等
+# jqtools
 
+基于 jQuery 的日常工具集，覆盖 DOM 操作与数据处理：表单 ↔ JSON、日期、正则校验、深拷贝、数组 / JSON 分组与转换等。
 
+[![npm](https://img.shields.io/npm/v/jqtools.svg)](https://www.npmjs.com/package/jqtools)
 
-### 用法
+## 安装
 
+```bash
+npm install jqtools jquery
 ```
 
-npm 安装
+> `jquery` 为 peerDependency，需自行安装（`>=3.0.0`）。
 
-npm install --save-dev jqtools
+## 用法
 
-`import $ from 'jqtools'`
-`$(xx).xx`或 `$.tools.xxx()`
+```js
+import $ from 'jqtools'
 
+// jQuery 实例方法
+$('form').formTojson()
+
+// 工具命名空间
+$.tools.getCurDate('-', 0, 2)
 ```
 
-### 分类
-- 一类是扩展空间名tools,此空间名下的方法调用为$.tools.xxx()
-- 另一类则是直接扩展fn空间名的属性和方法 $.fn.xxx()或者$('x').xxx()
+浏览器中也可先引入 jQuery，再引入构建产物 `lib/main.mjs`（需支持 ES Module）。
 
-## 将表单数据转换为JSON -***formTojson***
-*formTojson(newObj, join)*
-- newObj 允许在表单基础上添加其他数据
-- join 新添加的属性与表单中的属性重合时是否合并到已有属性并用逗号隔开，true合并，false替换form表单属性值
-- 返回值：JSON数据
-```html
-<form>
-	<input type="text" name="name" value="siyuan" />
-	<input type="text" name="password" value="123" />
-</form>
-<!--<input type="text" id='email' name="email"  value="xxx@xxx.com" />-->
+## API 一览
+
+| 类型 | 调用方式 | 说明 |
+|------|----------|------|
+| 实例方法 | `$(sel).method()` | 作用在选中的 DOM / 表单元素上 |
+| 工具方法 | `$.tools.method()` | 纯数据处理，不依赖特定选择器 |
+
+---
+
+## 实例方法 `$.fn`
+
+### formTojson(newObj?, join?)
+
+将表单（或带 `name` 的控件集合）序列化为 JSON。
+
+- `newObj`：额外合并的字段
+- `join`：`true` 时同名字段用逗号拼接；`false` / 省略时后者覆盖
+
+```js
+$('form').formTojson({ email: 'a@b.com' }, true)
+// => { name: 'siyuan', password: '123', email: 'a@b.com' }
+
+$('form').formTojson({ name: 'extra' }, true)
+// => { name: 'siyuan,extra', password: '123' }
+
+$('form').formTojson({ name: 'extra' }, false)
+// => { name: 'extra', password: '123' }
 ```
 
-```javascript
-//也可以选择$('form,#email').formTojson();这样来调用
-$('form').formTojson({email:'xxxx@163.com'},true);//{"name":"siyuan","password":"123","email":"xxxx@163.com"}
-$('form').formTojson({name:'xxxx@163.com'},true);//{"name":"siyuan,xxxx@163.com","password":"123"}
-$('form').formTojson({name:'xxxx@163.com'},false);//{"name":"xxxx@163.com","password":"123"}
+### setCurDate()
+
+将选中的 `date` 控件设为当天。
+
+```js
+$('#date,.date').setCurDate()
 ```
 
-## 初始化日期控件的值为当天日期 -***setCurDate***
-*将jq选择器选择的日期控件默认为当前日期*
+### checkDate()
 
-```html
-<input type="date" name="date" id="date" value="" />
-<input type="date" name="date1" class="date" value="" />
+校验起始 / 结束日期：第一个元素为开始，第二个为结束，结束须 ≥ 开始。
+
+```js
+$('#start,#end').checkDate() // true | false
 ```
 
+### checkSqlInjection()
+
+粗粒度检测输入中是否含常见 SQL 敏感片段；无敏感字符返回 `true`。
+
+```js
+$('input').checkSqlInjection()
 ```
 
-$('#date,.date').setCurDate();
+### nextElement(callback)
+
+为每个选中元素绑定「与下一个元素」的关系；`callback(t, i)` 中 `t` 为整组元素，`i` 为当前下标。
+
+```js
+$('input').nextElement(function (t, i) {
+  $(t[i]).on('keyup', function (event) {
+    if (event.keyCode === 13) $(t[i + 1]).focus()
+  })
+})
 ```
 
-## 检测日期选择条件是否正确 -***checkDate***
-*日期选择条件的检查，结束日期必须大于等于初始日期*
-- 返回值true/false
-```html
-<input type="date" name="date" id="date" value="" />
-<input type="date" name="date1" class="date" value="" />
+### RegNumber(num?)
+
+校验是否为合法数字，小数位不超过 `num`（默认 `2`）。
+
+```js
+$('#c').RegNumber(3) // '5.294' => true
 ```
 
-```javascript
-//第一个选取的对象是初始日期，第二个则为结束日期，返回boolean
-$('#date,.date').checkDate();//true/false
+### RegPhone()
+
+仅校验是否为 11 位数字。
+
+```js
+$('#phone').RegPhone()
 ```
 
-## 获取当前具体日期时间 -***getCurDate***
-*getCurDate(split, start, end)*
-- split 年月日的分隔符
-- start 年月日时分秒，对应0-5 ，从哪个单位开始
-- end 年月日时分秒，对应0-5 ，到哪个单位结束
-- 返回值：日期字符串（日期选择条件的检查，结束日期必须大于等于初始日期）
+### RegId()
 
+按大陆 18 位身份证号格式校验（含末位 `X`）。
 
-```javascript
-//第一个选取的对象是初始日期，第二个则为结束日期，返回字符串
-//参数getCurDate(split, start, end),split为日期分隔符,start,end参数为0-5，分别对应年月日时分秒
-$.tools.getCurDate('-',1,4);//"10-31 17:49"
+```js
+$('#id').RegId()
 ```
 
-## 指定当前元素与下一个元素的关系 -***nextElement***
-*nextElement(callback[t,i])*
-- callback 回调函数，指定选择的所有元素与其下一个元素之间的动作联系
-- t 选取的所有元素
-- i 当前元素在t元素列表中的索引
-在JQ对象中，指定选取对象的当前元素与下一个元素的关系，比如，按下enter键，下一个元素要做什么动作
+### hasEmpty()
 
-```html
-<input type="text" name="c" id="c" value="5.254" /> 
-<input type="text" name="d" id="d" value="4" />
+选中元素中是否存在空字符串值。
 
+```js
+$('#c,#d').hasEmpty()
 ```
 
-```javascript
-//nextElement(callback[t,i])=>t表示选取的所有元素，$(t[i])表示每一个元素,$(t[i+1])则为下一个元素
-//以下内容的效果为，绑定所有input元素，enter键keyup的时候，使下一个元素onfocus
-$('input').nextElement(function(t, i) {
-				$(t[i]).on('keyup', function(event) {
-					if(event.keyCode == 13) {
-						$(t[i + 1]).focus();
-					}
-				})
-			});
+### dataToInput(obj)
 
+按顺序将数组或对象的值写入选中输入框（超出控件数量的数据忽略）。
+
+```js
+$('#a,#b').dataToInput([1, 2])
+$('#a,#b').dataToInput({ x: 'aa', y: 'bb' })
 ```
 
-## 深拷贝数组或者JSON对象 -***deepCopy***
-**deepCopy(obj)**
-- obj 复制目标，数组或JSON
-- 返回新对象
-```javascript
-	var arr=[1,2,3];
-	var jsons={a:1,b:2,c:3};
-	var newArr=$.tools.deepCopy(arr);
-	var newJson=$.tools.deepCopy(jsons);
-	arr[0]=9;
-	jsons.a=9;
-	console.log(JSON.stringify(arr));//[9,2,3]
-	console.log(JSON.stringify(jsons));//{"a":9,"b":2,"c":3}
-	console.log(JSON.stringify(newArr));//[1,2,3]
-	console.log(JSON.stringify(newJson));//{"a":1,"b":2,"c":3}
+---
+
+## 工具方法 `$.tools`
+
+### getCurDate(split?, start?, end?)
+
+获取当前时间片段字符串。`start` / `end` 为 `0–5`，对应 年/月/日/时/分/秒。
+
+```js
+$.tools.getCurDate('-', 1, 4) // 例如 "11-12 17:49"
 ```
 
-## 检验小数位数 -***RegNumber***
-**RegNumber(num)**
-- num 检验小数点后的位数
-- 返回值 true/false
-```html
-	<input type="text" name="c" id="c" value="5.294" /> 
-			
+### deepCopy(obj)
+
+深拷贝数组或普通对象。
+
+```js
+const copy = $.tools.deepCopy({ a: 1, b: { c: 2 } })
 ```
 
-```javascript
-//RegNumber(num) num=>检测小数点位数，该值默认为两位小数，不可小于0
-$('#c').RegNumber(3);//true
+### getRandom(num, type?)
+
+生成指定位数随机串。`type`：`'number'` | `'word'` | `'hybrid'`（默认）。
+
+```js
+$.tools.getRandom(5, 'number') // "00622"
+$.tools.getRandom(5, 'word')   // "tbEYI"
+$.tools.getRandom(5)           // 混合
 ```
 
-## 检验手机位数 -***RegPhone***
-**RegPhone()**
-- 只检验是否11位，不检测有效性
-- 返回值 true/false
-```javascript
-//只单纯检测是否为11位，不作其他有效值判断，如有需要自行改变正则匹配
-console.log($('#c').RegPhone());
+### countDown(time, Func)
+
+秒级倒计时；返回 `setInterval` 的 id，可用 `clearInterval` 取消。回调参数为剩余秒数。
+
+```js
+const id = $.tools.countDown(60, (cd) => console.log(cd))
 ```
 
-## 检验JQ对象中是否含有空值 - ***hasEmpty***
+### groupBy(jsonArray, groupby, res)
 
-```html
-<input type="text" name="c" id="c" value="1234567w8901" /> 
-			<input type="text" name="d" id="d" value="" />
+按某字段分组，并将另一字段值用逗号聚合。
 
+```js
+$.tools.groupBy(
+  [{ age: 15, name: '张三' }, { age: 15, name: '小王' }, { age: 18, name: '李四' }],
+  'age',
+  'name'
+)
+// => [{ age: 15, name: '张三,小王' }, { age: 18, name: '李四' }]
 ```
 
-```
-$('#c,#d').hasEmpty();//true
-```
+### jsonArrayToArray(js, ...keys)
 
+JSON 数组投影为二维数组；不传 `keys` 时按对象属性顺序展开全部值。
 
-## 将数据填入表单数据中 - ***dataToInput***
-**dataToInput(obj)**
-- obj 数组或JSON
-- 根据传入对象数据顺序填入表单控件中,超过输入控件的数据不会进行处理
-
-```javascript
-var a=[1,2];
-var jsons={a:'a',b:'b'};
-$('#c,#d').dataToInput(a);
-$('#c,#d').dataToInput(jsons);
+```js
+$.tools.jsonArrayToArray(arr, 'age', 'name')
+// => [[15, '张三'], ...]
 ```
 
-## jsonp跨域请求 - ***jsonp***
-**jsonp(url, callbackFunc, data);** 
-- url 请求地址
-- callbackFunc  回调函数名
-- data 传输的数据
-```javascript
-$.tools.jsonp('http://www.xxx.com/xx.php','getResponce',{name:'siyuan'});
-//需要写一个与getResponce一样的回调函数。此处后台接受请求返回的格式如下
-//事实上 jsonp也并非一定要通过回调函数，只要跟后台返回的格式一一对应，我们同样能用数组、对象来存储数据
-/*
-  $fun=$_GET['callback'];//获取传递过来的函数名
-$name=$_GET['name'];
- $data="{age:18,name:'$name'}";//需要返回的数据
- echo "$fun($data)";
- */
+### mergeArray(first, second, newArray?)
 
-function getResponce(res)
-{
-	alert(res.name+res.age);//siyuan18
-	
-}
-```
-## 获取随机数 - ***getRandom***
-**getRandom(num, type)**
-- num 随机数的位数
-- type 随机数的类型，'number','word','hybrid'
+合并数组。`newArray === true` 返回新数组；否则原地合并到 `first`（默认）。
 
-``` 
-getRandom(num, type);//num:获取位数，type:'number','word','hybrid'，意思是返回纯数字，纯字母，或者混合型随机数
-console.log($.tools.getRandom(5,'number'));//00622
-console.log($.tools.getRandom(5,'word'));//tbEYI
-console.log($.tools.getRandom(5,'hybrid'));//F9liT
-
+```js
+$.tools.mergeArray([1, 2], [3], true)  // [1, 2, 3]
 ```
 
+### arrayHasElement(obj, arr)
 
-## 倒计时 -***countDown***
-```javascript
-//$.tools.countDown(time,Func[cd]);
-//time:倒计时，cd:剩余时间,返回值：一个可以传递给 Window.clearInterval() 从而取消对 code 的周期性执行的值。
-$.tools.countDown(60,function(cd){	
-	console.log(cd);	
-});
+返回 `arr` 中出现在 `obj`（数组/类数组）里的元素。
+
+```js
+$.tools.arrayHasElement([1, 2, 'ds'], [1, 2, 'a']) // [1, 2]
 ```
 
-## JSON数组分组函数 - ***groupBy***
-**groupBy(jsonArray, groupby, res)** 
-- jsonArray:json数组
-- groupby:按某个属性分组 
-- res：按groupby分组后得到的集合属性
-- 【返回值】分组后的JSON数组
+### jsonAssignment(objA, objB)
 
-```
-var arr=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'王五'},{age:15,name:'小王'},{age:12,name:'老王'}];
-var arr1=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'张三'},{age:15,name:'小王'},{age:12,name:'张三'}];
+将 `objB` 中与 `objA` 共有的键赋值给 `objA`；若 `objA` 存在 `objB` 没有的键则返回 `false`。
 
-console.log(JSON.stringify($.tools.groupBy(arr,'age','name')));//"[{"age":15,"name":"张三,小王"},{"age":18,"name":"李四"},{"age":12,"name":"王五,老王"}]"
-console.log(JSON.stringify($.tools.groupBy(arr1,'name','age')));//"[{"name":"张三","age":"15,12,12"},{"name":"李四","age":18},{"name":"小王","age":15}]"
-
+```js
+$.tools.jsonAssignment({ x: 1, y: 2 }, { x: 9, y: 8, z: 0 })
+// => { x: 9, y: 8 }
 ```
 
-## JSON数组转换成数组- ***jsonArrayToArray***
-		 * 例子：var n = jsonToarray(list, 'pay', 'processType');//如果只传入数组，则默认保存所有JSON数据
-		 * 输出 "[["365","2"],["3265","22"]]" ，结果顺序为[[pay,processType],[pay,processType]];
-		 * 
-		 * @param {Object} js JSON数组
-		 * @param {Object} arg1 指定需要的JSON数据，也可以用来指定数组排序
-		 *@param {Object} arg2
-		 *@param {Object} arg3 ....
-```javascript
-var arr=[{age:15,name:'张三'},{age:18,name:'李四'},{age:12,name:'王五'},{age:15,name:'小王'},{age:12,name:'老王'}];
-console.log(JSON.stringify($.tools.jsonArrayToArray(arr,'age','name')));// "[[15,"张三"],[18,"李四"],[12,"王五"],[15,"小王"],[12,"老王"]]"
-console.log(JSON.stringify($.tools.jsonArrayToArray(arr,'age')));//[[15],[18],[12],[15],[12]]
-console.log(JSON.stringify($.tools.jsonArrayToArray(arr)));//"[[15,"张三"],[18,"李四"],[12,"王五"],[15,"小王"],[12,"老王"]]"
+### arrayInputJsonArray(j, a, p) / arrayInputJson(...)
 
-```
-## 合并数组- ***mergeArray***
-**mergeArray(first,secone,newArray)**
-- first:合并的第一个数组
-- secone：合并的第二个数组
-- newArray是否需要返回新数组，还是合并到first数组，默认(false)合并到first数组并返回,true则返回新数组
+把数组 `a` 按序写入 JSON 数组 `j` 的属性 `p`（长度须一致）。`arrayInputJson` 为兼容别名。
 
-```
-var a=[1,2],b=[2,3],c=[4,5];
-var t=$.tools.mergeArray(a,b,true);
-var t=$.tools.mergeArray(a,b,false);
-var t=$.tools.mergeArray(a,b);
+```js
+$.tools.arrayInputJsonArray(
+  [{ name: 'a', age: 1 }, { name: 'b', age: 2 }],
+  [4, 5],
+  'age'
+)
 ```
 
-## 搜索数组内容- ***arrayHasElement***
-**arrayHasElement(obj,arr);**
-- obj:需要搜索的对象，目前只支持array/json   
-- arr:搜索目标，查找arr中是否有obj中的数据
-- 返回查找到的数据数组
-```
-$.tools.arrayHasElement([1,2,'ds'],[1,2,'a','v','d']);//[1,2]
-```
+### extractArrayFromJsonArray(j, ...props) / extractArrayFromJson(...)
 
-## 对象赋值- ***jsonAssignment***
-**jsonAssignment(objA,objB)**
-- objA 被赋值的对象
-- objB 赋值的对象
-```javascript
-$.tools.jsonAssignment(a,b);
-//将b的属性全部赋值给a，b的属性必须与a完全一致才允许赋值，成功返回新的JSON, 失败返回false
+从 JSON 数组抽取属性：单属性返回一维数组，多属性返回对象数组。短名称为兼容别名。
+
+```js
+$.tools.extractArrayFromJsonArray(list, 'name')
+// => ['a', 'b', ...]
+
+$.tools.extractArrayFromJsonArray(list, 'name', 'age')
+// => [{ name: 'a', age: 1 }, ...]
 ```
 
-## json数组属性值替换- ***jsonArrayReplace***
-**jsonArrayReplace(obj, prop, oldV, newV);**
-- obj 需要被替换属性的json数组
-- prop 被替换的属性
-- oldV 被替换的旧值
-- newV 新值 
-```
-var js=[{a:1},{a:2},{a:3}];	
-$.tools.jsonArrayReplace(js,'a','1','*');
-console.log(JSON.stringify(js));//[{"a":"*"},{"a":2},{"a":3}]
+### jsonArrayReplace(obj, prop, oldV, newV)
+
+替换 JSON 数组中指定属性的匹配值（严格相等）。
+
+```js
+$.tools.jsonArrayReplace([{ a: 1 }, { a: 2 }], 'a', 1, '*')
+// => [{ a: '*' }, { a: 2 }]
 ```
 
-## 索引查找- ***findIndex***
-*findIndex(obj,val,condition);*
-- obj 数组，JSON，JSON数组(第三个参数指定属性)
-- val 需要查找的值
-- condition 如果obj是JSON数组，则需要指定查找的属性
+### findIndex(obj, val, condition?)
 
+在数组、对象或 JSON 数组中查找值的索引 / 键；多结果返回数组，未找到返回 `null`。JSON 数组需传 `condition` 属性名。
 
-```javascript
-/*$.tools.findIndex(arr, val);
-arr可以是数组也可以是json
-val要查找的值
-
-返回值：
-没有找到 返回 null
-只有一个直接返回索引
-多个结果返回 结果集(数组)
-*/
-var arr={a:'1',b:'2',c:'8',d:'2'};
-$.tools.findIndex(arr,2);//['b','d'];
-$.tools.findIndex(arr,28);//null
-$.tools.findIndex(arr,8);//c
-
-var arrAll=	[{name:'a',age:1,l:5},{name:'b',age:2,l:5},{name:'c',age:3,l:5},{name:'d',age:4,l:5},{name:'c',age:3,l:5}];
-var arr=[1,2,3,4,1];
-$.tools.findIndex(arr,'1');//[0,4]
-$.tools.findIndex(arrAll,'3','age');//[2,4]
-
+```js
+$.tools.findIndex([1, 2, 3, 4, 1], 1)           // [0, 4]
+$.tools.findIndex(list, 3, 'age')               // 下标数组或单个下标
 ```
 
-## 查找字符串中的某一段- ***findString***
-**findString(str,val)**
-- str 查找的目标
-- val 查找的字符串片段 
-```
-$.tools.findString(str,val);
-$.tools.findString("siyuan","isy");//false
-$.tools.findString("siyuan","sy");//true
+### findString(str, val)
 
+判断 `str` 是否包含子串 `val`（`indexOf`）。
+
+```js
+$.tools.findString('siyuan', 'siy')  // true
+$.tools.findString('siyuan', 'sy')   // false（非连续子串）
 ```
 
+### arrayQueue(arr, turn?)
 
-## 数据队列- ***arrayQueue***
-**arrayQueue(arr,turn)**
-- arr 循环排列的数组
-- turn 循环排列的方向，默认false 向后排（第一到最后），true向前排(最后到第一)
-```javascript
-/**
-	 * JSON数据‘轮流排队’,用于一组循环排列的数据 [1,2,3,4]=》[2,3，4,1] 
-	 //如果是 JSON数组，需要排序某些属性而不更改原本的位置，则单独抽取出那个属性作为数组，再重新赋值
-	 //结合$.tools.arrayInputJson函数使用
-	 * @param {Object} arr 需要排列的数组
-	 * @param {Object} turn 第一个排到最后面 OR  最后面排到最前面 默认向后排队(false)
-	 */
-	var arr=[1,2,3,4];
-	$.tools.arrayQueue(arr,true);//[4,1,2,3]
-	$.tools.arrayQueue(arr);//默认值为false，向后排 [2,3,4,1]
+轮转数组：`turn` 默认 `false` 为队首到队尾；`true` 为队尾到队首。会修改原数组。
 
+```js
+$.tools.arrayQueue([1, 2, 3, 4])       // [2, 3, 4, 1]
+$.tools.arrayQueue([1, 2, 3, 4], true) // [4, 1, 2, 3]
 ```
 
-## 身份证验证- ***RegId***
-```javascript
-$('x').RegId();//true or false
+### findIndexWithCallback(obj, callback)
 
+自定义条件收集下标；回调中 `this` 为结果数组。
+
+```js
+$.tools.findIndexWithCallback([1, 2, 3, 4, 5], function (curVal, index) {
+  curVal > 3 && this.push(index)
+})
+// => [3, 4]
 ```
 
+### jsonStringJoin(obj, arr, sep)
 
-## JSON数组属性抽取- ***extractArrayFromJson***
-**extractArrayFromJsonArray(obj,par1,par2....);**
-- obj json数组
-- par1 提取的属性1 
-- par2 提取的属性2
-- par3 ...
-- 返回值 如果只提取一个属性，则返回数组，若提取多个属性，则返回JSON数组
-```javascript
+按属性名列表拼接对象字段。
 
-var arrAll=	[{name:'a',age:1},{name:'b',age:2},{name:'c',age:3},{name:'d',age:4}];
-$.tools.extractArrayFromJson(arrAll,'name');//"["a","b","c","d"]"
-$.tools.extractArrayFromJson(arrAll,'name','age');//[{name:'a',age:1},{name:'b',age:2},{name:'c',age:3},{name:'d',age:4}]
-
+```js
+$.tools.jsonStringJoin(
+  { name: 'siyuan', age: '18', phone: '13' },
+  ['name', 'age', 'phone'],
+  '@'
+)
+// => "siyuan@18@13"
 ```
 
-## JSON数组属性赋值 - ***arrayInputJsonArray***
+### AsciiSort(obj, attr?)
 
-```javascript
-var arrAll=	[{name:'a',age:1},{name:'b',age:2},{name:'c',age:3},{name:'d',age:4}];
-var arr=[4,5,6,7];
-$.tools.arrayInputJson(arrAll,arr,'age');//[{name:'a',age:4},{name:'b',age:5},{name:'c',age:6},{name:'d',age:7}]
+升序排序：数字按大小，其它按字典序。JSON 数组可指定 `attr`。
+
+```js
+$.tools.AsciiSort([100, 98, 155])
+$.tools.AsciiSort(['mch_id', 'body', 'openid'])
+$.tools.AsciiSort([{ a: 100 }, { a: 98 }], 'a')
 ```
 
-## 查找数组或JSON数组索引 - ***findIndexWithCallback***
-**findIndexWithCallback(obj,callback[curVal,index]);**
-- obj 索引对象
-- callback 条件回调函数, curVal 为当前的元素， index当前元素索引 ,this 为索引结果集（数组）
-```javascript
+### money(m)
 
-var t=$.tools.findIndexWithCallback([{a:1},{a:2}],function(curVal,index){
-				curVal.a>1&&this.push(index);			
-			});
-			
-var t1=$.tools.findIndexWithCallback([1,2,3,4,5,6],function(curVal,index){
-				curVal>3&&this.push(index);			
-			});
+金额千分位格式化。
 
-//t=> [1]
-//t1 => [3,4,5]
+```js
+$.tools.money(5000) // "5,000"
 ```
 
-## 拼接JSON数据 字符串
-**jsonStringJoin(obj,arr,sep)** 
-- obj JSON对象
-- arr 数组  需要拼接的属性名 
-- sep 分隔符
-```javascript
-var t={name:'siyuan',addr:'China-sichuan',phone:'13xxxxx',age:'18'};
-$.tools.jsonStringJoin(t,['name','age','phone','addr'],'@');//siyuan@18@13xxxxx@China-sichuan
+### \_checkOption(opt, defaultOption)
+
+检查 `opt` 是否包含 `defaultOption` 的全部键。
+
+```js
+$.tools._checkOption({ a: 1, b: 2 }, { a: '', b: '', c: '' }) // false
 ```
 
-## 按ASCII编码 从小到大排序 数组
-**AsciiSort(obj,attr)，如果排序的值为非number类型，按照unicode排序，也相当于ASCII排序【升序】，如果是number则按大小排序**
-- obj 数组
-- attr 如果obj是JSON数组，则可以指定按某个属性的值排序
-```javascript
+### jsonp(url, callbackFunc, data?)
 
-var newarr=AsciiSort([{a:100,b:5,f:85,c:2},{a:98},{a:155}],'a');//[{"a":98},{"a":100,"b":5,"f":85,"c":2},{"a":155}]
-var carr=AsciiSort([{a:'mch_id',b:5,f:85,c:2},{a:'openid'},{a:'appid'}],'a');//[{"a":"appid"},{"a":"mch_id","b":5,"f":85,"c":2},{"a":"openid"}]
-var arr=AsciiSort([100,98,155]);//98,100,155
-var c=AsciiSort(['mch_id','body','openid']);//body,mch_id,openid
+发起 JSONP 请求（依赖 jQuery `ajax`）。`url` 与回调名不可为空。
 
-//=======
-var str="body=物流/快递公司&mch_id=1497772112&appid=xxx&notify_url=xxx&nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F&openid=xxx-c8EzEA&out_trade_no=000000081517359702559&spbill_create_ip=58x.139&total_fee=1&trade_type=JSAPI"
-var arr=str.split('&');
-console.log(AsciiSort(arr));//appid=xxx,body=物流/快递公司,mch_id=1497772112,nonce_str=OUz1Hvfs2hixxzcnreTzrBScLw6R8l3F,notify_url=xxx,openid=xxx-c8EzEA,out_trade_no=000000081517359702559,spbill_create_ip=58x.139,total_fee=1,trade_type=JSAPI
-
-
+```js
+$.tools.jsonp('https://example.com/api', 'getResponse', { name: 'siyuan' })
 ```
 
-## 新增金额划分，如5000 =>5,000
-**money(m)**
-- m 数字金额
-```
-$.tools.money(50032154654165400)//50,032,154,654,165,400
+---
+
+## 开发
+
+```bash
+npm install
+npm test          # Node 内置 test runner + jsdom
+npm run build     # 输出 lib/main.mjs（jquery 为 external）
 ```
 
-**_checkOption(opt,defaultOption)**
-- opt 传入object
-- defaultOption 自定义必须属性
-```javascript
-defaultOption={a:'',b:'',c:''}
-opt={a:'1',b:'2'}
-$.tools._checkPotion(opt,defaultOption);// false 提示传入参数中缺少【c】属性
-```
+## License
+
+ISC

@@ -89,18 +89,15 @@ $.fn.extend({
 	 * @param {Object} num
 	 */
 	RegNumber: function(num) {
-		arguments[0] > 0 ? num : num = 2;
+		num = (typeof num === 'number' && num > 0) ? num : 2;
 		var res = true;
+		var reg = new RegExp('^\\d+(\\.\\d{1,' + num + '})?$');
 		$.each($(this), function() {
-
-			if(!(eval('/^\\d+(\.\\d{1,' + num + '})?$/g').test($(this).val()))) {
+			if(!reg.test($(this).val())) {
 				res = false;
 			}
-
 		});
-
 		return res;
-
 	},
 	RegPhone: function() {
 		//console.log(1)
@@ -223,7 +220,7 @@ $.extend({
 					break;
 			}
 			for(var i = 0; i < num; i++) {
-				res += arr[Math.floor(Math.random() * (arr.length - 1))];
+				res += arr[Math.floor(Math.random() * arr.length)];
 			}
 			return res;
 		},
@@ -396,17 +393,14 @@ $.extend({
 		 */
 		jsonAssignment: function(a, b) {
 			var res = true;
+			var key;
 			for(key in a) {
-
 				key in b || (res = false);
-
 			}
 			return res && ((function() {
 				for(key in a) {
-
 					a[key] = b[key];
-
-				};
+				}
 			})(), a) || false;
 		},
 		/**
@@ -417,11 +411,15 @@ $.extend({
 		 */
 		arrayInputJsonArray: function(j, a, p) {
 			return j.length == a.length && (function() {
+				var i;
 				for(i in j) {
 					j[i][p] = a[i];
 				}
 			}(), j) || false;
-
+		},
+		/** @deprecated 请使用 arrayInputJsonArray */
+		arrayInputJson: function(j, a, p) {
+			return this.arrayInputJsonArray(j, a, p);
 		},
 
 		/**
@@ -432,24 +430,24 @@ $.extend({
 		extractArrayFromJsonArray: function(j, p) {
 			var arr = [],
 				args = arguments;
+			var x, i;
 			return arguments.length > 2 && ((function() {
-
 				for(x in j) {
 					var jsons = {}; //对象引用的是地址，如果不重新新建的话会被修改数据
 					for(i = 1; i < args.length; i++) {
-
 						jsons[args[i]] = j[x][args[i]];
-
 					}
 					arr.push(jsons);
 				}
-
 			})(), arr) || ((function() {
 				for(i in j) {
 					arr.push(j[i][p]);
 				}
 			})(), arr)
-
+		},
+		/** @deprecated 请使用 extractArrayFromJsonArray */
+		extractArrayFromJson: function() {
+			return this.extractArrayFromJsonArray.apply(this, arguments);
 		},
 
 		/**
@@ -460,11 +458,9 @@ $.extend({
 		 * @param {Object} newV 新值
 		 */
 		jsonArrayReplace: function(arr, prop, oldV, newV) {
-
+			var i;
 			for(i in arr) {
-
 				arr[i][prop] = arr[i][prop] == oldV ? newV : arr[i][prop];
-
 			}
 			return arr;
 		},
@@ -515,13 +511,14 @@ $.extend({
 		 */
 		jsonStringJoin: function(obj, arr, sep) {
 			var res = '';
-			for(i in arr) {
-
-				(i != arr.length - 1) && (res += eval('obj.' + arr[i]) + sep) || (res += eval('obj.' + arr[i]));
-
+			var i;
+			for(i = 0; i < arr.length; i++) {
+				res += obj[arr[i]];
+				if(i !== arr.length - 1) {
+					res += sep;
+				}
 			}
 			return res;
-
 		},
 		/**
 		 * 非number类型按照unicode码排序，number类型则按大小排序，实际上是利用array的sort()函数，
@@ -530,12 +527,22 @@ $.extend({
 		 * @param {Object} attr 如果obj为JSON数组，可以按照某个属性的值进行排序
 		 */
 		AsciiSort: function(obj, attribute) {
-			attribute && obj.sort(function(a, b) {
-				return(typeof a[attribute] == 'number' && typeof b[attribute] == 'number') && a[attribute] - b[attribute] ||
-					a[attribute] > b[attribute];
-			}) || obj.sort(function(a, b) {
-				return(typeof a == 'number' && typeof b == 'number') && a - b || a > b;
-			});
+			function cmp(a, b) {
+				if(typeof a === 'number' && typeof b === 'number') {
+					return a - b;
+				}
+				if(a === b) {
+					return 0;
+				}
+				return a > b ? 1 : -1;
+			}
+			if(attribute) {
+				obj.sort(function(a, b) {
+					return cmp(a[attribute], b[attribute]);
+				});
+			} else {
+				obj.sort(cmp);
+			}
 			return obj;
 		},
 		/**
